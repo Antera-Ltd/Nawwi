@@ -11,8 +11,13 @@ export default {
       colors: {
         background: "#fffaeb",
         surface: "#fdf8e6",
+        nawwi: {
+          accent: "#b47878",
+          secondary: "#ebc0bc",
+          neutral: "#eadada",
+        },
         brand: {
-          orange: "#FA520F",
+          orange: "#b47878", // Replaced with nawwi accent
           cream: "#fffaeb",
           dark: "#1F1F1F",
           gray: {
@@ -25,7 +30,7 @@ export default {
           }
         },
         primary: {
-          DEFAULT: "#FA520F",
+          DEFAULT: "#b47878", // Replaced with nawwi accent
           foreground: "#fffaeb",
         },
         border: "rgba(31, 31, 31, 0.1)",
@@ -36,7 +41,7 @@ export default {
         serif: ['Instrument Serif', 'serif'],
       },
       backgroundImage: {
-        'grid-pattern': "linear-gradient(to right, rgba(250, 82, 15, 0.08) 1px, transparent 1px), linear-gradient(to bottom, rgba(250, 82, 15, 0.08) 1px, transparent 1px)",
+        'grid-pattern': "linear-gradient(to right, rgba(180, 120, 120, 0.08) 1px, transparent 1px), linear-gradient(to bottom, rgba(180, 120, 120, 0.08) 1px, transparent 1px)",
       },
       backgroundSize: {
         'grid-size': '40px 40px',

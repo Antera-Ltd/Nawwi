@@ -18,7 +18,7 @@
   }
 
   .btn-primary {
-    @apply bg-[#FA520F] text-[#fffaeb] px-8 py-4 rounded-none font-bold transition-all hover:bg-[#1F1F1F] hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50;
+    @apply bg-[#b47878] text-[#fffaeb] px-8 py-4 rounded-none font-bold transition-all hover:bg-[#1F1F1F] hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50;
   }
 
   .btn-secondary {
@@ -44,9 +44,9 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #FA520F;
+  background: #b47878;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #d4410a;
+  background: #9a6565;
 }
