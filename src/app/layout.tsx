@@ -23,8 +23,8 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "ANTERA",
-  description: "Advanced Neural Technologies & Engineering Research Agency",
+  title: "Nawwi Wellness",
+  description: "Scent-led wellness brand from Tanzania",
   icons: {
     icon: "/Nawwi-logo.png",
   },

@@ -43,14 +43,12 @@ export const Navbar = () => {
     { name: t('nav.solutions'), href: '/solutions', icon: BriefcaseBusiness },
   ]
 
-  const navLinks = [
-    { name: t('nav.products'), href: '/products' },
-    { name: t('nav.solutions'), href: '/solutions' },
-    { name: t('nav.sekela'), href: '/sekela-apis' },
-    { name: t('nav.developers'), href: '/developers' },
-    { name: t('nav.blog'), href: '/blog', isDropdown: true },
-    { name: t('nav.customers'), href: '/customers' },
-    { name: t('nav.company'), href: '/company' },
+  const navLinks: { name: string; href: string; isDropdown?: boolean }[] = [
+    { name: 'Shop', href: '/shop' },
+    { name: 'Events', href: '/events' },
+    { name: 'Quiz', href: '/quiz' },
+    { name: 'Track Order', href: '/track' },
+    { name: 'Admin', href: '/admin' },
   ]
 
   return (
@@ -67,8 +65,8 @@ export const Navbar = () => {
             {/* Logo */}
             <Link href="/" className="flex items-center gap-3 px-6 border-r border-black hover:bg-neutral-50 transition-colors flex-shrink-0 relative">
               <span className="absolute inset-0 border-t border-l border-neutral-100 pointer-events-none" />
-              <img src="/Nawwi-logo.png" alt="ANTERA Logo" className="h-6 w-6 object-contain" />
-              <span className="font-black text-black tracking-tighter">ANTERA</span>
+              <img src="/Nawwi-logo.png" alt="Nawwi Wellness Logo" className="h-6 w-6 object-contain" />
+              <span className="font-black text-black tracking-tighter">NAWWI</span>
             </Link>
 
             {/* Nav Items */}
