@@ -109,6 +109,19 @@ export const FinalCTAAndFooter = () => {
           </div>
 
           <div className="flex items-center gap-4">
+            {/* Developed by Antera Group Software */}
+            <div className="text-[10px] font-normal tracking-normal text-neutral-400 uppercase">
+              Developed by{' '}
+              <a 
+                href="https://antera.co.tz" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="font-medium hover:text-neutral-900 transition-colors underline-offset-2 hover:underline"
+              >
+                Antera Group Software
+              </a>
+            </div>
+
             <div className="flex items-center gap-1.5">
               {['en', 'sw'].map(lang => (
                 <button

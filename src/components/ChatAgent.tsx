@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, Mic, ChevronDown, Wifi, Battery, Signal, RefreshCcw } from 'lucide-react';
+import { Send, ChevronDown, Wifi, Battery, Signal } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -150,6 +150,9 @@ const ChatAgent = () => {
   const [clockTime, setClockTime] = useState('');
   const scrollRef = useRef<HTMLDivElement>(null);
 
+  const API_URL = process.env.NEXT_PUBLIC_CHAT_API_URL;
+  const ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
   useEffect(() => {
     const tick = () => setClockTime(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
     tick();
@@ -164,20 +167,52 @@ const ChatAgent = () => {
   const callAI = async (currentMessages: Msg[]) => {
     setIsLoading(true);
     try {
-      const response = await fetch('/api/nawwi-ai', {
+      // Format messages exactly how your Edge Function expects
+      const formattedMessages = currentMessages.map(m => ({
+        role: m.role,
+        content: m.text
+      }));
+
+      console.log("Sending to Edge Function:", JSON.stringify(formattedMessages));
+
+      const response = await fetch(API_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          messages: currentMessages.map(m => ({ 
-            role: m.role, 
-            content: m.text 
-          })) 
-        }),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${ANON_KEY}`,
+        },
+        body: JSON.stringify({ messages: formattedMessages }),
       });
-      const result = await response.json();
-      setMessages(prev => [...prev, { role: 'model', text: result.text, time: getTime() }]);
+
+      console.log("Response status:", response.status);
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("Error response:", errorText);
+        throw new Error(`HTTP ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Response data:", data);
+
+      if (data.text) {
+        setMessages(prev => [...prev, {
+          role: 'model',
+          text: data.text,
+          time: getTime()
+        }]);
+      } else if (data.error) {
+        throw new Error(data.error);
+      } else {
+        throw new Error("No text in response");
+      }
     } catch (err) {
       console.error("AI Error:", err);
+      setMessages(prev => [...prev, {
+        role: 'model',
+        text: "Sorry, I'm having trouble connecting right now. Please try again.",
+        time: getTime()
+      }]);
     } finally {
       setIsLoading(false);
     }
