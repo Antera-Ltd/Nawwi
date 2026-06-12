@@ -71,7 +71,7 @@ export default function ProductDetailPage() {
         >
           <span className="text-sm font-bold text-[#b47878] uppercase tracking-[0.2em] mb-4">Handcrafted in Tanzania</span>
           <h1 className="text-5xl md:text-6xl font-serif mb-6">{product.name}</h1>
-          <p className="text-3xl font-serif mb-8 text-neutral-600">${product.price}</p>
+          <p className="text-3xl font-serif mb-8 text-neutral-600">Tsh. {product.price}</p>
 
           <div className="space-y-6 mb-12">
             <div>
@@ -108,7 +108,6 @@ export default function ProductDetailPage() {
               <ShieldCheck size={20} className="text-[#b47878] shrink-0" />
               <div>
                 <h5 className="font-bold text-sm">Secure Payment</h5>
-                <p className="text-xs text-gray-500">Stripe & Lipa Namba (Mix by yas).</p>
               </div>
             </div>
           </div>

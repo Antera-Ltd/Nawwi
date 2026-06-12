@@ -172,13 +172,13 @@ function TrackContent() {
               {order.items?.map((item: any, idx: number) => (
                 <div key={idx} className="flex justify-between text-xs font-medium text-neutral-600">
                   <span>{item.name} <span className="text-neutral-400 font-normal ml-1">× {item.quantity}</span></span>
-                  <span className="text-neutral-900">${(item.price * item.quantity).toFixed(2)}</span>
+                  <span className="text-neutral-900">Tzs {(item.price * item.quantity).toFixed(2)}</span>
                 </div>
               ))}
               
               <div className="border-t border-neutral-100 pt-3.5 flex justify-between items-center text-neutral-900">
                 <span className="text-xs font-bold uppercase tracking-wider">Total Amount</span>
-                <span className="text-base font-bold tracking-tight">${order.total}</span>
+                <span className="text-base font-bold tracking-tight">Tzs {order.total}</span>
               </div>
             </div>
           </div>

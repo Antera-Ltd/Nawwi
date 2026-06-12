@@ -264,7 +264,7 @@ function ProductCard({ product, view }: { product: any; view: 'grid' | 'list' })
         {/* Price & Primary Call to Action Footer Area */}
         <div className="flex items-center justify-between mt-auto pt-3 border-t border-neutral-100">
           <div className="flex flex-col">
-            <span className="text-base font-bold text-neutral-900">${product.price}</span>
+            <span className="text-base font-bold text-neutral-900">Tsh. {product.price}</span>
           </div>
           
           <button
