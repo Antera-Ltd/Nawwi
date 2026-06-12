@@ -14,14 +14,15 @@ export const supabase = createClient(
 
 export async function uploadImage(file: File, bucket: 'products' | 'events' = 'products') {
   const fileExt = file.name.split('.').pop();
-  const fileName = `${Math.random().toString(36).substring(2)}.${fileExt}`;
-  const filePath = `${fileName}`;
+  const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`;
+  const filePath = fileName;
 
-  const { data, error } = await supabase.storage
+  const { error } = await supabase.storage
     .from(bucket)
     .upload(filePath, file);
 
   if (error) {
+    console.error('Upload error:', error);
     throw error;
   }
 
