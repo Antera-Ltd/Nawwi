@@ -4,7 +4,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, Mic, ChevronDown, Wifi, Battery, Signal, RefreshCcw } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { getScentRecommendation } from '@/lib/quizEngine';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -205,7 +204,13 @@ const ChatAgent = () => {
     } else {
       setIsLoading(true);
       try {
-        const result = await getScentRecommendation(newAnswers);
+        const response = await fetch('/api/quiz', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ answers: newAnswers }),
+        });
+        const result = await response.json();
+
         if (result.recommendations) {
           setMessages(prev => [...prev, {
             role: 'model',

@@ -57,7 +57,7 @@ export const NetworkVisualization = () => {
         >
           <div className="flex items-center gap-2 text-black">
             {/* Custom Code-Driven Pixel Art Dot Graphic */}
-            <div className="w-1.5 h-1.5 bg-[#FA520F]" />
+            <div className="w-1.5 h-1.5 bg-[#b47878]" />
             <span className="text-[8px] font-mono tracking-widest uppercase font-bold text-neutral-500">
               {node.label}
             </span>
@@ -76,7 +76,7 @@ export const NetworkVisualization = () => {
 const DataParticle = ({ delay }: { delay: number }) => {
   return (
     <motion.div
-      className="absolute w-1 h-1 bg-[#FA520F]"
+      className="absolute w-1 h-1 bg-[#b47878]"
       initial={{ left: "50%", top: "15%", opacity: 0 }}
       animate={{
         left: ["50%", "85%", "70%", "50%", "15%", "50%"],

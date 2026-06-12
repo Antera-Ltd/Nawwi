@@ -1,10 +1,10 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { GoogleGenerativeAI } from "https://esm.sh/@google/generative-ai@0.21.0"
 
-const SYSTEM_PROMPT = `Your name is Antera AI. You are the advanced neural interface for ANTERA (Advanced Neural Technologies & Engineering Research Agency).
+const SYSTEM_PROMPT = `Your name is Nawwi AI. You are the advanced neural interface for NAWWI (Advanced Neural Technologies & Engineering Research Agency).
 Your mission is to provide technical, precise, and highly sophisticated guidance for enterprise partners interested in AI architecture, digital transformation, and high-scale engineering.
 
-ANTERA CORE FOCUS:
+NAWWI CORE FOCUS:
 - Enterprise AI Solutions: Custom LLMs, agentic workflows, and predictive systems.
 - Digital Product Engineering: High-performance web applications and native mobile development (iOS/Android).
 - Infrastructure: Scalable cloud architecture, performance tuning, and technical engineering.
@@ -34,7 +34,7 @@ serve(async (req) => {
     const GEMINI_API_KEY = Deno.env.get('GEMINI_API_KEY')
     if (!GEMINI_API_KEY) {
       return new Response(
-        JSON.stringify({ error: "ANTERA_OFFLINE: API Key missing" }),
+        JSON.stringify({ error: "NAWWI_OFFLINE: API Key missing" }),
         { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       )
     }
@@ -96,7 +96,7 @@ serve(async (req) => {
     )
 
   } catch (error: any) {
-    console.error("Antera Error:", error.message)
+    console.error("Nawwi Error:", error.message)
     return new Response(
       JSON.stringify({ error: error.message }),
       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }

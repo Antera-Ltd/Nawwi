@@ -1,10 +1,10 @@
-export async function getAnteraResponse(messages: { role: string; parts: { text: string }[] }[]) {
+export async function getNawwiResponse(messages: { role: string; parts: { text: string }[] }[]) {
   const endpoint = process.env.NEXT_PUBLIC_CHAT_API_URL || '/api/chat';
 
   if (!endpoint || endpoint === 'your_supabase_edge_function_url') {
     // Fallback for development if env is not set
     if (process.env.NODE_ENV === 'development') {
-        return "Antera AI development mode active. Please configure NEXT_PUBLIC_CHAT_API_URL for production.";
+        return "Nawwi AI development mode active. Please configure NEXT_PUBLIC_CHAT_API_URL for production.";
     }
     console.error("CHAT_API_URL is not defined");
     throw new Error("Chat service is currently unavailable.");
@@ -21,7 +21,7 @@ export async function getAnteraResponse(messages: { role: string; parts: { text:
 
   if (!response.ok) {
     const errorData = await response.json();
-    throw new Error(errorData.error || "Failed to get response from Antera AI");
+    throw new Error(errorData.error || "Failed to get response from Nawwi AI");
   }
 
   const data = await response.json();

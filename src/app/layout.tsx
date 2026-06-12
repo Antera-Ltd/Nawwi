@@ -17,7 +17,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 const instrumentSerif = Instrument_Serif({
-  variable: "--font-instrument-serif",
+  variable: "--font-serif",
   weight: "400",
   subsets: ["latin"],
 });
@@ -41,7 +41,7 @@ export default function RootLayout({
         className={`${inter.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable} antialiased`}
       >
         <LanguageProvider>
-          <div className="min-h-screen bg-white text-[#1F1F1F] selection:bg-[#FA520F]/30">
+          <div className="min-h-screen bg-white text-[#1F1F1F] selection:bg-[#b47878]/30">
             <Navbar />
             <main>{children}</main>
             <FinalCTAAndFooter />
