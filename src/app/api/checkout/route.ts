@@ -50,8 +50,8 @@ export async function POST(req: Request) {
       return NextResponse.json({ url: session.url, orderId: order.id });
     }
 
-    // 3. Handle Mix by yas (Placeholder for local payment)
-    // Here you would typically initiate the Mix by yas API call
+    // 3. We will Handle Mix by yas (Placeholder for local payment)
+    // typically initiate the Mix by yas API call
 
     // Send confirmation email via Brevo
     await sendEmail({
