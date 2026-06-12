@@ -22,7 +22,7 @@ const translations: Record<Language, Record<string, string>> = {
     'nav.start_building': 'Shop Now',
     'hero.title_part1': 'The Scent of',
     'hero.title_part2': 'Serenity.',
-    'hero.description': 'NAWWI Wellness brings luxury, scent-led wellness from the heart of Tanzania. Discover handcrafted candles and immersive sensory experiences designed for your sanctuary.',
+    'hero.description': 'Nawwi Wellness brings luxury, scent-led wellness from the heart of Tanzania. Discover handcrafted candles and immersive sensory experiences designed for your sanctuary.',
     'page.products.title': 'Our Candles',
     'page.products.desc': 'Handcrafted scents for every mood and space.',
     'page.solutions.title': 'Bespoke Events',
