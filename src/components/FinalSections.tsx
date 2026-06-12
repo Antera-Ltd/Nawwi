@@ -1,10 +1,10 @@
 'use client';
-import React, { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowRight } from 'lucide-react'
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowRight } from 'lucide-react';
 
 export const OperationSection = () => {
-  const [activeStep, setActiveStep] = useState('harvest')
+  const [activeStep, setActiveStep] = useState('harvest');
 
   const steps = [
     { id: 'harvest', name: 'Ethical Harvest', label: 'Phase One', desc: 'Sourcing the finest Tanzanian botanicals directly from local ethical farmers and wild harvesters.' },
@@ -13,133 +13,135 @@ export const OperationSection = () => {
     { id: 'pour', name: 'Hand Poured', label: 'Phase Four', desc: 'Crafted in small batches using our signature coconut-soy wax blend for a clean, sustainable, and long-lasting burn.' },
     { id: 'cure', name: 'Patient Curing', label: 'Phase Five', desc: 'Every candle is cured for three weeks to ensure maximum scent throw and perfect wax stability before leaving our studio.' },
     { id: 'ritual', name: 'Sensory Ritual', label: 'Phase Six', desc: 'Integrating your purchase into a daily wellness ritual designed to ground your space and elevate your mood.' },
-  ]
+  ];
 
-  const currentData = steps.find(s => s.id === activeStep)
+  const currentData = steps.find(s => s.id === activeStep);
 
   return (
-    <section id="company" className="bg-white border-b-4 border-black text-black font-sans antialiased w-full overflow-hidden">
-      
-      {/* Top Retro Pixel Indicator Banner */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-        className="w-full bg-[#111113] border-b-4 border-black py-16 px-8 text-center flex flex-col items-center relative"
-      >
-        <div className="flex items-center gap-3 mb-6 select-none">
-          <svg width="28" height="28" viewBox="0 0 16 16" fill="none" className="text-[#b47878]">
-            <path d="M6 1h4v2H6V1zm5 3h2v2h-2V4zM3 4h2v2H3V4zm5 5h2v2H8V9zm5 2h2v2h-2v-2zM1 11h2v2H1v-2zM6 13h4v2H6v-2z" fill="currentColor"/>
-          </svg>
-        </div>
-        <h2 className="text-3xl md:text-5xl font-normal tracking-tight max-w-4xl text-white uppercase leading-tight font-serif">
-          Crafting tranquility through patient, artisanal processes.
-        </h2>
-      </motion.div>
-
-      {/* Main Multi-tiered Structural Grid Blocks */}
-      <div className="mx-auto flex flex-col lg:flex-row items-stretch w-full min-h-[480px] bg-neutral-100">
+    <section id="company" className="bg-[#fcfcfc] py-24 px-6 border-b border-gray-100 font-sans antialiased w-full overflow-hidden">
+      <div className="max-w-6xl mx-auto">
         
-        <div className="w-full lg:w-80 flex flex-col justify-start border-b-4 lg:border-b-0 lg:border-r-4 border-black p-6 lg:p-8 bg-white">
-          <div className="flex flex-col gap-3 w-full">
+        {/* Section Typography Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mb-16 pb-8 border-b border-gray-100 flex flex-col md:flex-row md:items-end justify-between gap-6"
+        >
+          <div className="max-w-xl">
+            <div className="text-xs font-mono tracking-widest text-gray-400 uppercase mb-3">03 / Process</div>
+            <h2 className="text-4xl font-bold tracking-tight text-gray-900 leading-[1.15]">
+              Crafting tranquility through patient processes
+            </h2>
+          </div>
+          <div className="flex items-center gap-4 text-gray-400 font-mono text-xs tracking-wider uppercase">
+            <span>@artisanal</span>
+            <span className="w-1 h-1 bg-gray-300 rounded-full" />
+            <span>@nawwi</span>
+          </div>
+        </motion.div>
+
+        {/* Dynamic Interactive Layout Grid */}
+        <div className="flex flex-col lg:flex-row items-stretch gap-12 w-full mt-12">
+          
+          {/* Navigation Controls Left Sidebar */}
+          <div className="w-full lg:w-72 flex flex-col gap-2 shrink-0">
             {steps.map((step) => {
-              const isActive = activeStep === step.id
+              const isActive = activeStep === step.id;
               return (
                 <button
                   key={step.id}
                   onClick={() => setActiveStep(step.id)}
-                  className={`group relative border-4 border-black px-4 py-4 font-mono text-xs font-bold uppercase tracking-wider transition-all duration-75 text-left ${
-                    isActive 
-                      ? 'bg-[#b47878] text-white translate-x-[4px] translate-y-[4px] shadow-none'
-                      : 'bg-white text-neutral-500 hover:text-black shadow-[4px_4px_0px_0px_#000000] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none'
-                  }`}
+                  className="w-full text-left py-3.5 px-4 rounded-xl flex items-center justify-between transition-all duration-200 group text-sm"
                 >
-                  <span className="absolute inset-0 border-t-2 border-l-2 border-white/30 pointer-events-none" />
-                  <span className="absolute inset-0 border-b-2 border-r-2 border-black/30 pointer-events-none" />
-                  
-                  <span className="relative flex items-center justify-between w-full">
-                    <span className="flex items-center gap-3">
-                      <span className={`text-[9px] font-mono ${isActive ? 'text-white font-extrabold' : 'text-neutral-400 group-hover:text-black'}`}>
-                        {step.label}
-                      </span>
-                      <span className={isActive ? 'font-extrabold' : ''}>
-                        {step.name}
-                      </span>
+                  <div className="flex flex-col">
+                    <span className="text-[10px] font-mono tracking-wider uppercase text-gray-400 mb-0.5">
+                      {step.label}
                     </span>
-                    {isActive && <ArrowRight className="w-3.5 h-3.5 text-white" />}
-                  </span>
+                    <span className={`font-medium transition-colors ${isActive ? 'text-black font-semibold' : 'text-gray-500 group-hover:text-gray-900'}`}>
+                      {step.name}
+                    </span>
+                  </div>
+                  
+                  {isActive ? (
+                    <motion.div layoutId="activeStepIndicator" className="w-2 h-2 rounded-full bg-black" />
+                  ) : (
+                    <ArrowRight className="w-3.5 h-3.5 text-gray-300 opacity-0 group-hover:opacity-100 transition-opacity transform group-hover:translate-x-0.5" />
+                  )}
                 </button>
-              )
+              );
             })}
           </div>
-        </div>
 
-        <div className="flex-1 p-6 md:p-12 bg-neutral-100 flex flex-col justify-center items-stretch relative">
-          <div className="bg-white border-4 border-black p-8 md:p-12 min-h-[300px] flex flex-col justify-center relative shadow-[8px_8px_0px_0px_#000000]">
-            <span className="absolute inset-0 border-t-4 border-l-4 border-white pointer-events-none" />
-            <span className="absolute inset-0 border-b-4 border-r-4 border-neutral-300 pointer-events-none" />
+          {/* Interactive Presentation Screen Block */}
+          <div className="flex-1 bg-white border border-gray-100 rounded-2xl p-10 md:p-14 flex flex-col justify-center relative shadow-sm min-h-[320px]">
+            {/* Minimalist Top corner accent element inspired by line-art aesthetics */}
+            <div className="absolute top-6 left-6 w-8 h-8 opacity-20 border-t-2 border-l-2 border-black" />
             
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeStep}
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.15 }}
-                className="max-w-xl relative"
+                initial={{ opacity: 0, x: 15 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -15 }}
+                transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                className="max-w-xl"
               >
-                <h3 className="text-4xl font-serif text-neutral-900 mb-4 italic">
-                  {currentData?.name}.
+                <h3 className="text-2xl font-semibold text-gray-900 mb-4 tracking-tight">
+                  {currentData?.name}
                 </h3>
-                <p className="text-neutral-700 text-sm md:text-base leading-relaxed font-normal">
+                <p className="text-gray-500 text-base leading-relaxed font-light">
                   {currentData?.desc}
                 </p>
               </motion.div>
             </AnimatePresence>
           </div>
-        </div>
 
+        </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
 export const DataScienceSection = () => {
   const services = [
-    { title: 'Scent Matching', desc: 'Personalized fragrance consultation using our AI engine to find your emotional scent signature.', accent: true},
-    { title: 'Subscription Box', desc: 'Monthly wellness deliveries featuring new seasonal candles, crystals, and Tanzanian tea blends.', accent: false },
-    { title: 'Custom Gifting', desc: 'Bespoke candle designs and scent profiles for weddings, corporate events, and special celebrations.', accent: false},
-    { title: 'Home Consultation', desc: 'Expert guidance on how to layer scents throughout your home to create distinct atmospheric zones.', accent: false },
-    { title: 'Diffuser Blends', desc: 'Highly concentrated pure essential oil blends for ultrasonic and nebulizing diffusers.', accent: false},
-    { title: 'Wellness Coaching', desc: 'Holistic support to integrate sensory practices into a comprehensive self-care routine.', accent: true },
-    { title: 'Studio Tours', desc: 'Go behind the scenes at our Dar es Salaam studio to see our artisanal process in person.', accent: false},
-    { title: 'Partner Venues', desc: 'Experience Nawwi scents at the finest luxury hotels and spas across Tanzania and Zanzibar.', accent: false},
-  ]
+    { title: 'Scent Matching', desc: 'Personalized fragrance consultation using our AI engine to find your emotional scent signature.', pill: 'AI Powered' },
+    { title: 'Subscription Box', desc: 'Monthly wellness deliveries featuring new seasonal candles, crystals, and Tanzanian tea blends.', pill: 'Curated' },
+    { title: 'Custom Gifting', desc: 'Bespoke candle designs and scent profiles for weddings, corporate events, and special celebrations.', pill: 'Bespoke' },
+    { title: 'Home Consultation', desc: 'Expert guidance on how to layer scents throughout your home to create distinct atmospheric zones.', pill: 'Premium' },
+    { title: 'Diffuser Blends', desc: 'Highly concentrated pure essential oil blends for ultrasonic and nebulizing diffusers.', pill: 'Pure Extract' },
+    { title: 'Wellness Coaching', desc: 'Holistic support to integrate sensory practices into a comprehensive self-care routine.', pill: 'Holistic' },
+    { title: 'Studio Tours', desc: 'Go behind the scenes at our Dar es Salaam studio to see our artisanal process in person.', pill: 'Experience' },
+    { title: 'Partner Venues', desc: 'Experience Nawwi scents at the finest luxury hotels and spas across Tanzania and Zanzibar.', pill: 'Luxury' },
+  ];
 
   return (
-    <section className="bg-white border-b-4 border-black text-black font-sans antialiased w-full overflow-hidden">
+    <section className="bg-white py-24 px-6 border-b border-gray-100 text-black font-sans antialiased w-full overflow-hidden">
       
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-        className="w-full border-b-4 border-black bg-white"
-      >
-        <div className="w-full mx-auto px-8 md:px-12 py-14 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      {/* Dynamic Header Block Layout */}
+      <div className="max-w-6xl mx-auto w-full mb-16">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="w-full pb-8 border-b border-gray-100 flex flex-col md:flex-row items-start md:items-end justify-between gap-6"
+        >
           <div className="max-w-xl">
-            <h2 className="text-3xl font-serif uppercase tracking-tight leading-none italic">
+            <div className="text-xs font-mono tracking-widest text-gray-400 uppercase mb-3">04 / Offerings</div>
+            <h2 className="text-4xl font-bold tracking-tight text-gray-900">
               Wellness Services & Bespoke Scenting
             </h2>
           </div>
-          <p className="text-black/50 text-xs max-w-md leading-relaxed font-normal font-mono">
-            Beyond the candle: comprehensive sensory support for your personal sanctuary or commercial space.
+          <p className="text-gray-400 text-xs max-w-xs leading-relaxed font-light font-mono uppercase tracking-wider">
+            Beyond the candle: comprehensive sensory support for your personal sanctuary.
           </p>
-        </div>
-      </motion.div>
+        </motion.div>
+      </div>
 
-      <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 items-stretch bg-black gap-[4px]">
+      {/* Grid Layout inspired by Editorial Presentation Panels */}
+      <div className="max-w-6xl mx-auto w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12">
         {services.map((s, i) => (
           <motion.div
             key={i} 
@@ -147,37 +149,38 @@ export const DataScienceSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: i * 0.05 }}
-            className="p-8 pb-10 bg-white flex flex-col justify-between group transition-colors hover:bg-neutral-50 relative"
+            className="group flex flex-col justify-between relative border-t border-gray-100 pt-6"
           >
-            <span className="absolute inset-0 border-t-2 border-l-2 border-neutral-100 pointer-events-none group-hover:border-white" />
-            
-            <div className="relative">
-              {s.accent && <div className="absolute -top-8 -left-8 -right-8 h-2 bg-[#b47878]" />}
-              
-              <div className="flex items-center justify-between mb-8 pt-2">
-                <svg width="20" height="20" viewBox="0 0 10 10" fill="none" className="text-black/30 group-hover:text-[#b47878] transition-colors">
-                  <path d="M1 1h8v1H1V1zm0 3h8v1H1V4zm0 3h6v1H1V7z" fill="currentColor"/>
-                </svg>
+            <div>
+              {/* Floating style label overlay badges mimicking Screenshot 2 */}
+              <div className="flex items-center justify-between mb-6">
+                <span className="text-[10px] font-mono font-medium tracking-wider text-gray-400 uppercase bg-gray-50 px-2.5 py-1 rounded-full group-hover:bg-black group-hover:text-white transition-colors">
+                  {s.pill}
+                </span>
+                <span className="w-1.5 h-1.5 rounded-full bg-transparent group-hover:bg-black transition-colors" />
               </div>
               
-              <h3 className="text-sm font-bold tracking-wider text-black mb-3 uppercase group-hover:text-[#b47878] transition-colors font-mono">
+              <h3 className="text-base font-semibold tracking-tight text-gray-900 mb-2">
                 {s.title}
               </h3>
-              <p className="text-neutral-600 text-xs leading-relaxed font-normal max-w-[210px]">
+              <p className="text-gray-500 text-xs leading-relaxed font-light">
                 {s.desc}
               </p>
             </div>
 
-            <div className="mt-8 pt-4 border-t-2 border-black/5 flex items-center justify-between w-full text-[10px] font-mono text-neutral-400 group-hover:text-black transition-colors uppercase font-bold">
-              <ArrowRight className="w-3 h-3 text-neutral-300 group-hover:text-[#b47878] transform group-hover:translate-x-0.5 transition-all stroke-[2.5px]" />
+            <div className="mt-8 pt-4 flex items-center justify-between w-full border-t border-dashed border-gray-100 group-hover:border-gray-200 transition-colors">
+              <span className="text-[10px] font-mono text-gray-300 group-hover:text-black transition-colors">Explore service</span>
+              <div className="w-6 h-6 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-black transition-colors">
+                <ArrowRight className="w-3 h-3 text-gray-400 group-hover:text-white transition-colors" />
+              </div>
             </div>
           </motion.div>
         ))}
       </div>
 
     </section>
-  )
-}
+  );
+};
 
 export const WhySection = () => {
   const reasons = [
@@ -189,55 +192,58 @@ export const WhySection = () => {
     { title: 'Community Support', desc: 'A portion of every sale supports women-led agricultural cooperatives across rural Tanzania.' },
     { title: 'Immersive Events', desc: 'Monthly workshops and retreats that foster deep connection and sensory mindfulness.' },
     { title: 'Luxury Standard', desc: 'Crafted to compete with the finest international fragrance houses while remaining rooted in African heritage.' }
-  ]
+  ];
 
   return (
-    <section className="bg-white border-b-4 border-black text-black font-sans antialiased w-full overflow-hidden">
-      <div className="mx-auto flex flex-col lg:flex-row items-stretch w-full">
+    <section className="bg-[#fcfcfc] py-24 px-6 border-b border-gray-100 text-black font-sans antialiased w-full overflow-hidden">
+      <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-start gap-16 w-full">
         
+        {/* Left Area Content Block */}
         <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="lg:w-4/12 p-8 md:p-12 lg:p-16 flex flex-col justify-between border-b-4 lg:border-b-0 lg:border-r-4 border-black bg-[#111113] text-white relative"
+          className="lg:w-4/12 flex flex-col justify-between"
         >
           <div>
-            <div className="flex items-center gap-1.5 mb-8 select-none">
-              <svg width="24" height="24" viewBox="0 0 12 12" fill="none" className="text-[#b47878]">
-                <path d="M2 2h8v2H2V2zm0 3h8v2H2V5zm0 3h8v2H2V8z" fill="currentColor"/>
-              </svg>
+            <div className="flex items-center gap-4 text-gray-400 font-mono text-xs mb-6 tracking-widest uppercase">
+              <span>@philosophy</span>
+              <span className="w-1 h-1 bg-gray-300 rounded-full" />
+              <span>@values</span>
             </div>
-            <h2 className="text-4xl font-serif italic tracking-tight uppercase leading-[0.9] text-white">
-              Why Choose <span className="text-[#b47878] block font-bold not-italic">Nawwi Wellness.</span>
+            
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 leading-[1.15] mb-6">
+              Why Choose <br />
+              <span className="text-gray-400 font-light italic">Nawwi Wellness</span>
             </h2>
+
+            <p className="text-gray-500 text-sm leading-relaxed font-light max-w-sm">
+              Our uncompromising devotion to pristine raw ingredients and intentional, data-supported design choices balances deep luxury with clean sustainability.
+            </p>
           </div>
         </motion.div>
 
-        <div className="lg:w-8/12 grid grid-cols-1 md:grid-cols-2 items-stretch bg-black gap-[4px]">
+        {/* Right Side Matrix List Elements */}
+        <div className="lg:w-8/12 w-full grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
           {reasons.map((reason, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, scale: 0.98 }}
-              whileInView={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.04 }}
-              className="p-8 lg:p-10 flex flex-col justify-start group bg-white hover:bg-neutral-50 transition-all relative shadow-[inset_0_0_0_2px_rgba(0,0,0,0.05)]"
+              transition={{ duration: 0.5, delay: i * 0.04 }}
+              className="flex flex-col border-t border-gray-100 pt-5 group relative"
             >
-              <span className="absolute inset-0 border-t-2 border-l-2 border-neutral-100 pointer-events-none group-hover:border-white" />
-              <span className="absolute inset-0 border-b-2 border-r-2 border-neutral-200 pointer-events-none" />
-              
-              <div className="absolute top-2 right-2 w-1.5 h-1.5 bg-neutral-200 group-hover:bg-[#b47878] transition-colors" />
-
-              <div className="flex items-center gap-3 mb-3">
-                <span className="font-mono text-[9px] bg-black text-white px-1.5 py-0.5 font-bold border border-black group-hover:bg-[#b47878] transition-colors">
+              <div className="flex items-center gap-3 mb-2">
+                <span className="font-mono text-[10px] text-gray-400 font-semibold tracking-wider">
                   0{i + 1}
                 </span>
-                <h4 className="font-bold text-sm uppercase tracking-wider text-neutral-900 transition-colors font-mono">
+                <h4 className="font-semibold text-sm text-gray-900 tracking-tight transition-colors group-hover:text-gray-600">
                   {reason.title}
                 </h4>
               </div>
-              <p className="text-neutral-600 text-xs leading-relaxed max-w-sm font-normal">
+              <p className="text-gray-500 text-xs leading-relaxed font-light">
                 {reason.desc}
               </p>
             </motion.div>
@@ -246,5 +252,5 @@ export const WhySection = () => {
 
       </div>
     </section>
-  )
-}
+  );
+};

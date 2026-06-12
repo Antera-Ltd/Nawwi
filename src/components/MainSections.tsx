@@ -1,222 +1,201 @@
 'use client';
 import React from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import Image from 'next/image';
 
 export const TrustSection = () => {
-  const containerRef = React.useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"]
-  });
-  const y = useTransform(scrollYProgress, [0, 1], [0, 100]);
-  const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.3, 1, 1, 0.3]);
-
-  const images = [
-    '/src/assets/pexels-irina-anastasiu-10540-54512.jpg',
-    '/src/assets/pexels-mike-art-visual-creator-photography-and-video-2159421235-36547455.jpg',
-    '/src/assets/spa-treatment-dark.jpg',
-    '/src/assets/mountain.jpg'
+  // Overlapping cards data to match the artwork presentation in Screenshot 1
+  const cards = [
+    { image: '/src/assets/spa-treatment-dark.jpg', rotate: '-12deg', x: -60, y: 15, zIndex: 10 },
+    { image: '/src/assets/pexels-irina-anastasiu-10540-54512.jpg', rotate: '-6deg', x: -20, y: 5, zIndex: 20 },
+    { image: '/src/assets/pexels-mike-art-visual-creator-photography-and-video-2159421235-36547455.jpg', rotate: '4deg', x: 20, y: 0, zIndex: 30 },
+    { image: '/src/assets/spa-treatment-dark.jpg', rotate: '12deg', x: 60, y: 10, zIndex: 10 },
   ];
 
   return (
-    <section ref={containerRef} className="relative bg-white overflow-hidden py-32">
-      <motion.div style={{ y, opacity }} className="absolute inset-0 pointer-events-none">
-        <div className="relative w-full h-full">
-          <div className="absolute top-20 right-10 w-96 h-96 rounded-full overflow-hidden opacity-20">
-            <Image src={images[0]} alt="" fill className="object-cover" />
-          </div>
-          <div className="absolute bottom-20 left-10 w-72 h-72 rounded-full overflow-hidden opacity-15">
-            <Image src={images[2]} alt="" fill className="object-cover" />
-          </div>
-        </div>
-      </motion.div>
-
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+    <section className="bg-[#fcfcfc] py-28 px-6 overflow-hidden relative selection:bg-black selection:text-white">
+      <div className="max-w-5xl mx-auto flex flex-col items-center text-center">
+        
+        {/* Hero Area */}
         <motion.div
-          initial={{ opacity: 0, y: 60 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-24"
+          className="max-w-4xl"
         >
-          <div className="inline-block mb-6">
-            <div className="text-[11px] font-mono tracking-[0.2em] text-[#b47878] font-semibold">01 — PHILOSOPHY</div>
-            <div className="h-px w-12 bg-[#b47878] mt-2" />
-          </div>
-          <h2 className="text-7xl md:text-8xl lg:text-9xl font-light tracking-tight text-gray-900 leading-[0.9]">
-            Sensory
-            <br />
-            <span className="font-bold bg-gradient-to-r from-[#b47878] to-[#d4a0a0] bg-clip-text text-transparent">Wellness.</span>
-          </h2>
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-normal tracking-tight text-gray-900 leading-[1.1] mb-8 font-sans">
+            A place to display your <br className="hidden md:inline" />
+            <span className="relative inline-block">
+              masterpiece.
+              {/* Floating @coplin-style pill badge */}
+              <span className="absolute -top-8 -left-16 bg-[#2563eb] text-white px-4 py-1.5 rounded-full text-xs font-medium tracking-wide shadow-md transform -rotate-6 hidden md:block">
+                @artisanal
+              </span>
+              {/* Floating @andrea-style pill badge */}
+              <span className="absolute -bottom-6 -right-16 bg-[#16a34a] text-white px-4 py-1.5 rounded-full text-xs font-medium tracking-wide shadow-md transform rotate-6 hidden md:block">
+                @sustainable
+              </span>
+            </span>
+          </h1>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
-          <div className="space-y-20">
+        {/* Floating Overlapping Showcase Deck */}
+        <div className="relative w-full max-w-3xl h-64 md:h-80 my-16 flex items-center justify-center">
+          {cards.map((card, i) => (
             <motion.div
-              initial={{ opacity: 0, x: -40 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              key={i}
+              initial={{ opacity: 0, scale: 0.8, y: 40, rotate: 0 }}
+              whileInView={{ opacity: 1, scale: 1, y: card.y, rotate: card.rotate }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="group cursor-pointer"
+              transition={{ delay: i * 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              style={{ zIndex: card.zIndex }}
+              className="absolute w-40 h-52 md:w-52 md:h-64 rounded-2xl overflow-hidden bg-gray-100 shadow-xl border-4 border-white transform transition-transform duration-300 hover:scale-105 hover:z-50"
             >
-              <div className="flex items-start gap-6">
-                <div className="text-8xl font-black text-gray-200 group-hover:text-[#b47878] transition-colors duration-300">01</div>
-                <div>
-                  <h3 className="text-2xl font-semibold text-gray-900 mb-3">Artisanal Quality</h3>
-                  <p className="text-gray-500 text-lg leading-relaxed font-light">
-                    Every candle is hand-poured in small batches using premium coconut-soy wax and locally sourced essential oils.
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: -40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="group cursor-pointer"
-            >
-              <div className="flex items-start gap-6">
-                <div className="text-8xl font-black text-gray-200 group-hover:text-[#b47878] transition-colors duration-300">02</div>
-                <div>
-                  <h3 className="text-2xl font-semibold text-gray-900 mb-3">Sustainable Sourcing</h3>
-                  <p className="text-gray-500 text-lg leading-relaxed font-light">
-                    Commitment to the environment through plastic-free packaging and supporting local ethical agriculture in Tanzania.
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: -40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="group cursor-pointer"
-            >
-              <div className="flex items-start gap-6">
-                <div className="text-8xl font-black text-gray-200 group-hover:text-[#b47878] transition-colors duration-300">03</div>
-                <div>
-                  <h3 className="text-2xl font-semibold text-gray-900 mb-3">Ancient Wisdom</h3>
-                  <p className="text-gray-500 text-lg leading-relaxed font-light">
-                    Drawing from generations of Tanzanian botanical knowledge passed down through healers and elders.
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9, rotateY: 15 }}
-            whileInView={{ opacity: 1, scale: 1, rotateY: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="relative"
-            style={{ perspective: 1000 }}
-          >
-            <div className="relative rounded-3xl overflow-hidden aspect-[4/5] shadow-2xl">
-              <Image
-                src="/src/assets/Gemini_Generated_Image_f4szfzf4szfzf4sz.png"
-                alt=""
-                fill
+              <Image 
+                src={card.image} 
+                alt="Sensory presentation" 
+                fill 
                 className="object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-            </div>
-            <div className="absolute -bottom-8 -left-8 w-48 h-48 rounded-full overflow-hidden shadow-xl rotate-12">
-              <Image
-                src="/src/assets/56142.jpg"
-                alt=""
-                fill
-                className="object-cover"
-              />
-            </div>
-          </motion.div>
+            </motion.div>
+          ))}
         </div>
+
+        {/* Subtext description underneath the deck */}
+        <p className="text-gray-500 text-xs md:text-sm max-w-xl leading-relaxed tracking-wide font-light mb-10">
+          Combining ancient Tanzanian botanical knowledge with modern wellness practices to create scents that heal. Artists can display their masterpieces, and buyers can discover and enjoy.
+        </p>
+
+
+        {/* 3 Pillars - Clean minimal footers */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mt-32 w-full border-t border-gray-100 pt-16 text-left">
+          {[
+            { title: 'Artisanal Quality', desc: 'Every candle is hand-poured in small batches using premium coconut-soy wax and locally sourced essential oils.' },
+            { title: 'Sustainable Sourcing', desc: 'Commitment to the environment through plastic-free packaging and supporting local ethical agriculture in Tanzania.' },
+            { title: 'Intentional Craft', desc: 'Small-batch production ensures every candle meets our uncompromising standards of excellence.' }
+          ].map((item, i) => (
+            <motion.div
+              key={item.title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1, duration: 0.5 }}
+            >
+              <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-3">{item.title}</h3>
+              <p className="text-gray-500 text-sm leading-relaxed font-light">{item.desc}</p>
+            </motion.div>
+          ))}
+        </div>
+
       </div>
     </section>
   );
 };
 
 export const ServicesSection = () => {
-  const services = [
-    {
-      title: "Aromatherapy",
-      description: "Blends designed to target specific emotional states: from calming the mind to revitalizing the body.",
-      image: "/src/assets/spa-treatment-dark.jpg"
-    },
-    {
-      title: "Home Sanctuary",
-      description: "Minimalist designs that complement any space, transforming your home into a high-end wellness retreat.",
-      image: "/src/assets/pexels-irina-anastasiu-10540-54512.jpg"
-    },
-    {
-      title: "Mindful Rituals",
-      description: "Curated sets and workshops that help you build consistent wellness practices into your daily life.",
-      image: "/src/assets/pexels-mike-art-visual-creator-photography-and-video-2159421235-36547455.jpg"
-    }
-  ];
-
   return (
-    <section className="relative bg-gray-50 overflow-hidden py-32">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 60 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-24"
-        >
-          <div className="inline-block mb-6">
-            <div className="text-[11px] font-mono tracking-[0.2em] text-[#b47878] font-semibold">02 — SERVICES</div>
-            <div className="h-px w-12 bg-[#b47878] mt-2" />
-          </div>
-          <h2 className="text-6xl md:text-7xl lg:text-8xl font-light tracking-tight text-gray-900 leading-[1.1]">
-            The Essence of
-            <br />
-            <span className="font-bold bg-gradient-to-r from-[#b47878] to-[#d4a0a0] bg-clip-text text-transparent">Wellness.</span>
-          </h2>
-          <p className="mt-8 text-gray-500 text-xl max-w-2xl leading-relaxed font-light">
-            We create sensory products that facilitate deep connection with oneself and the surrounding environment.
-          </p>
-        </motion.div>
+    <section className="bg-white py-28 px-6 border-t border-gray-100 overflow-hidden">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+        
+        {/* Left Side: Editorial Typography & Content */}
+        <div className="lg:col-span-5 flex flex-col justify-between h-full py-4">
+          <div>
+            {/* Architectural minimalist line art placeholder */}
+            <div className="w-16 h-10 mb-8 flex flex-col justify-between opacity-40">
+              <div className="w-full h-[2px] bg-black rounded-full" />
+              <div className="w-3/4 h-[2px] bg-black rounded-full" />
+              <div className="w-1/2 h-[2px] bg-black rounded-full" />
+            </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {services.map((service, index) => (
-            <motion.div
-              key={service.title}
-              initial={{ opacity: 0, y: 80 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.15, ease: [0.16, 1, 0.3, 1] }}
-              whileHover={{ y: -16 }}
-              className="group cursor-pointer"
-            >
-              <div className="relative h-[500px] rounded-3xl overflow-hidden shadow-lg">
-                <Image
-                  src={service.image}
-                  alt=""
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
-                
-                <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
-                  <div className="text-[#b47878] text-sm font-mono mb-3">0{index + 1}</div>
-                  <h3 className="text-3xl font-semibold mb-3 tracking-tight">{service.title}</h3>
-                  <p className="text-white/80 text-base leading-relaxed font-light">
-                    {service.description}
-                  </p>
-                  <motion.div 
-                    className="mt-6 w-12 h-px bg-white/40 group-hover:w-24 transition-all duration-500"
-                  />
-                </div>
-              </div>
-            </motion.div>
-          ))}
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 leading-[1.15] mb-6 font-sans">
+              Bringing your <br />community together
+            </h2>
+            
+            <p className="text-gray-500 text-base leading-relaxed font-light mb-8 max-w-md">
+              We create sensory products that facilitate deep connection with oneself and the surrounding environment. Blends designed to target specific emotional states.
+            </p>
+
+            <button className="px-8 py-3.5 bg-[#141414] text-white rounded-full text-sm font-medium hover:bg-black transition-all shadow-md">
+              Get started
+            </button>
+          </div>
+
+          {/* Outlined Testimonial Card matching Screenshot 2 */}
+          <div className="mt-16 p-6 border border-gray-200 rounded-lg bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)] relative">
+            <p className="text-xs font-mono italic text-gray-600 leading-relaxed">
+              "The standard chunk of premium aromas used since the 1500s is reproduced below for those interested. Cultivated thoughtfully from deep within Tanzania."
+            </p>
+            
+            {/* Social Icons row */}
+            <div className="flex gap-3 mt-6 text-gray-400">
+              <span className="w-4 h-4 rounded-full bg-gray-200 inline-block" />
+              <span className="w-4 h-4 rounded-full bg-gray-200 inline-block" />
+              <span className="w-4 h-4 rounded-full bg-gray-200 inline-block" />
+            </div>
+          </div>
         </div>
+
+        {/* Right Side: Editorial Bento Layout Grid (Screenshot 2 Style) */}
+        <div className="lg:col-span-7 grid grid-cols-3 grid-rows-3 gap-3 aspect-square w-full max-w-xl mx-auto">
+          
+          {/* Box 1: Abstract Graphic */}
+          <div className="bg-[#eab308] opacity-90 rounded-none flex items-center justify-center p-4 relative overflow-hidden group">
+            <div className="w-20 h-20 rounded-full border-2 border-dashed border-white/40 flex items-center justify-center animate-spin-slow">
+              <span className="text-white text-[10px] tracking-widest uppercase font-bold">Love</span>
+            </div>
+          </div>
+
+          {/* Box 2: Image 1 */}
+          <div className="col-span-2 relative overflow-hidden bg-gray-100">
+            <Image src="/src/assets/spa-treatment-dark.jpg" alt="Aromatherapy" fill className="object-cover" />
+            <span className="absolute top-3 right-3 bg-white px-3 py-1 rounded-full text-[10px] font-medium tracking-wide shadow-sm text-black">
+              Inclusive
+            </span>
+          </div>
+
+          {/* Box 3: Big Image 2 */}
+          <div className="row-span-2 relative overflow-hidden bg-gray-100">
+            <Image src="/src/assets/pexels-irina-anastasiu-10540-54512.jpg" alt="Home Sanctuary" fill className="object-cover" />
+            <span className="absolute top-3 right-3 bg-white px-3 py-1 rounded-full text-[10px] font-medium tracking-wide shadow-sm text-black">
+              Creative
+            </span>
+          </div>
+
+          {/* Box 4: Center Profile Grid Image */}
+          <div className="col-span-2 relative overflow-hidden bg-gray-100">
+            <Image src="/src/assets/pexels-mike-art-visual-creator-photography-and-video-2159421235-36547455.jpg" alt="Mindful Rituals" fill className="object-cover" />
+          </div>
+
+          {/* Box 5: Image 3 */}
+          <div className="relative overflow-hidden bg-gray-100">
+            <Image src="/src/assets/spa-treatment-dark.jpg" alt="Atmosphere" fill className="object-cover" />
+            <span className="absolute bottom-3 left-3 bg-white px-3 py-1 rounded-full text-[10px] font-medium tracking-wide shadow-sm text-black">
+              Diverse
+            </span>
+          </div>
+
+          {/* Box 6: Graphic Element */}
+          <div className="bg-[#38bdf8] flex items-center justify-center p-4">
+            <span className="text-white text-4xl font-extralight">✦</span>
+          </div>
+
+          {/* Box 7: Image 4 */}
+          <div className="relative overflow-hidden bg-gray-100">
+            <Image src="/src/assets/pexels-irina-anastasiu-10540-54512.jpg" alt="Sensory" fill className="object-cover" />
+            <span className="absolute top-3 right-3 bg-white px-3 py-1 rounded-full text-[10px] font-medium tracking-wide shadow-sm text-black">
+              Caring
+            </span>
+          </div>
+
+          {/* Box 8: Abstract Shape Geometry */}
+          <div className="bg-[#6366f1] flex items-center justify-center relative overflow-hidden">
+            <div className="w-16 h-16 bg-white rounded-full mix-blend-screen opacity-40 translate-x-4" />
+            <div className="w-16 h-16 bg-white rounded-full mix-blend-screen opacity-40 -translate-x-4" />
+          </div>
+
+        </div>
+
       </div>
     </section>
   );
