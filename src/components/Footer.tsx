@@ -48,7 +48,7 @@ export const FinalCTAAndFooter = () => {
             </Link>
 
             <a 
-              href="https://wa.me/255760984921" 
+              href="https://wa.me/255612078359" 
               target="_blank" 
               rel="noopener noreferrer"
               className="px-5 py-2.5 bg-white hover:bg-neutral-50 text-neutral-900 border border-neutral-200 rounded-lg text-xs font-medium tracking-wide transition-all shadow-sm block text-center"
@@ -87,7 +87,7 @@ export const FinalCTAAndFooter = () => {
               +255 612 078 359
             </span>
             <a 
-              href="https://wa.me/255760984921" 
+              href="https://wa.me/255612078359" 
               target="_blank" 
               rel="noopener noreferrer"
               className="flex items-center gap-1.5 hover:text-neutral-600 transition-colors"

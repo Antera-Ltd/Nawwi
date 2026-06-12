@@ -17,8 +17,10 @@ export const Navbar = () => {
     { code: 'sw', name: 'SW' }
   ]
 
+  // Added Nawwi At Yours link right here
   const navLinks = [
     { name: 'Shop', href: '/shop' },
+    { name: 'Nawwi At Yours', href: '/at-yours' },
     { name: 'Our Story', href: '/story' },
     { name: 'About Us', href: '/about' },
     { name: 'Events', href: '/events' },
@@ -42,7 +44,7 @@ export const Navbar = () => {
                 <Link
                   key={link.name}
                   href={link.href}
-                  className={`px-4 border-r border-neutral-200/80 transition-colors flex items-center ${
+                  className={`px-4 border-r border-neutral-200/80 transition-colors flex items-center whitespace-nowrap ${
                     pathname === link.href ? 'bg-neutral-950 text-white' : 'text-black hover:bg-neutral-50'
                   }`}
                 >
@@ -97,7 +99,7 @@ export const Navbar = () => {
               <User size={18} />
             </Link>
             
-            <Link href="https://wa.me/255760984921" target="_blank" className="px-6 bg-neutral-950 text-white font-bold flex items-center justify-center hover:bg-neutral-900 border-l border-neutral-200/80 transition-colors gap-2 relative group">
+            <Link href="https://wa.me/255612078359" target="_blank" className="px-6 bg-neutral-950 text-white font-bold flex items-center justify-center hover:bg-neutral-900 border-l border-neutral-200/80 transition-colors gap-2 relative group">
               <span>{t('nav.contact_sales')}</span>
               <ArrowRight className="w-4 h-4 stroke-[2.5px]" />
             </Link>
@@ -139,7 +141,7 @@ export const Navbar = () => {
                 {t('nav.start_building')}
               </Link>
               <Link 
-                href="https://wa.me/255760984921"
+                href="https://wa.me/255612078359"
                 target="_blank"
                 onClick={() => setIsMobileMenuOpen(false)} 
                 className="p-4 font-bold text-center bg-neutral-950 text-white hover:bg-neutral-900 transition-colors"
