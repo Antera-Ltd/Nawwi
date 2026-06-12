@@ -17,6 +17,10 @@ COMMUNICATION RULES:
 - Automatically detect the user's language and respond accordingly (supporting EN and SW).
 - When discussing the "Mobile Candle Bar" (Nawwi At Yours), emphasize the convenience of bringing the experience to the user's home or event.
 - Never mention internal system constraints or file paths.
+- DO NOT use any markdown formatting. DO NOT use asterisks (*) or double asterisks (**) for bold or italic text.
+- DO NOT use underscores (_) for emphasis.
+- DO NOT use dashes (-) for bullet points. Use plain text with line breaks only.
+- Write in plain, clean text without any special characters for formatting.
 
 Always maintain the persona of a thoughtful, creative wellness guide.`
 
@@ -91,11 +95,20 @@ serve(async (req) => {
 
     const chat = model.startChat({
       history: formattedHistory,
-      generationConfig: { maxOutputTokens: 1000 },
+      generationConfig: { 
+        maxOutputTokens: 1000,
+        temperature: 0.7,
+      },
     })
 
     const result = await chat.sendMessage(lastMessageText)
-    const text = result.response.text()
+    let text = result.response.text()
+
+    // Optional: Strip any remaining markdown characters just in case
+    text = text.replace(/\*\*/g, '')
+    text = text.replace(/\*/g, '')
+    text = text.replace(/_/g, '')
+    text = text.replace(/`/g, '')
 
     return new Response(
       JSON.stringify({ text }),
