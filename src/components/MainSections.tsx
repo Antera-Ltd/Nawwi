@@ -1,193 +1,223 @@
 'use client';
-import React from 'react'
-import { motion } from 'framer-motion'
-import { ArrowRight } from 'lucide-react'
+import React from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import Image from 'next/image';
 
 export const TrustSection = () => {
-  return (
-    <section className="bg-white border-b border-black text-black font-sans antialiased w-full overflow-hidden">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-        className="mx-auto flex flex-col lg:flex-row items-stretch w-full"
-      >
-        
-        {/* Left Side Label Block */}
-        <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="lg:w-4/12 p-8 md:p-12 lg:p-16 border-b lg:border-b-0 lg:border-r border-black bg-white flex flex-col justify-between"
-        >
-          <div>
-            <div className="flex items-center gap-1.5 mb-8 select-none">
-              {/* Pixel Badge Graphic */}
-              <svg width="20" height="20" viewBox="0 0 10 10" fill="none" className="text-[#b47878]">
-                <path d="M1 1h8v2H1V1zm1 4h6v1H2V5zm2 3h2v1H4V8z" fill="currentColor"/>
-              </svg>
+  const containerRef = React.useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+  const y = useTransform(scrollYProgress, [0, 1], [0, 100]);
+  const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.3, 1, 1, 0.3]);
 
-            </div>
-            <h3 className="text-3xl font-normal tracking-tight uppercase leading-[0.95] mb-4">
-              Our Sensory Philosophy
-            </h3>
-            <p className="text-neutral-500 text-xs leading-relaxed max-w-xs font-normal">
-              Combining ancient Tanzanian botanical knowledge with modern wellness practices to create scents that heal.
-            </p>
+  const images = [
+    '/src/assets/pexels-irina-anastasiu-10540-54512.jpg',
+    '/src/assets/pexels-mike-art-visual-creator-photography-and-video-2159421235-36547455.jpg',
+    '/src/assets/spa-treatment-dark.jpg',
+    '/src/assets/mountain.jpg'
+  ];
+
+  return (
+    <section ref={containerRef} className="relative bg-white overflow-hidden py-32">
+      <motion.div style={{ y, opacity }} className="absolute inset-0 pointer-events-none">
+        <div className="relative w-full h-full">
+          <div className="absolute top-20 right-10 w-96 h-96 rounded-full overflow-hidden opacity-20">
+            <Image src={images[0]} alt="" fill className="object-cover" />
           </div>
+          <div className="absolute bottom-20 left-10 w-72 h-72 rounded-full overflow-hidden opacity-15">
+            <Image src={images[2]} alt="" fill className="object-cover" />
+          </div>
+        </div>
+      </motion.div>
+
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 60 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-24"
+        >
+          <div className="inline-block mb-6">
+            <div className="text-[11px] font-mono tracking-[0.2em] text-[#b47878] font-semibold">01 — PHILOSOPHY</div>
+            <div className="h-px w-12 bg-[#b47878] mt-2" />
+          </div>
+          <h2 className="text-7xl md:text-8xl lg:text-9xl font-light tracking-tight text-gray-900 leading-[0.9]">
+            Sensory
+            <br />
+            <span className="font-bold bg-gradient-to-r from-[#b47878] to-[#d4a0a0] bg-clip-text text-transparent">Wellness.</span>
+          </h2>
         </motion.div>
 
-        {/* Right Side Content Grid */}
-        <div className="lg:w-8/12 p-6 md:p-8 grid grid-cols-1 sm:grid-cols-2 gap-4 items-stretch bg-neutral-50/10">
-          
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="p-8 bg-white flex flex-col justify-between min-h-[220px] group relative border-4 border-black transition-all duration-75 shadow-[4px_4px_0px_0px_#000000]"
-          >
-            {/* 3D block shadows and accent indicators */}
-            <div className="absolute top-0 left-0 right-0 h-1 bg-[#b47878]" />
-            <span className="absolute inset-0 border-t-2 border-l-2 border-black/5 pointer-events-none" />
-            <span className="absolute inset-0 border-b-2 border-r-2 border-black/20 pointer-events-none" />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
+          <div className="space-y-20">
+            <motion.div
+              initial={{ opacity: 0, x: -40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="group cursor-pointer"
+            >
+              <div className="flex items-start gap-6">
+                <div className="text-8xl font-black text-gray-200 group-hover:text-[#b47878] transition-colors duration-300">01</div>
+                <div>
+                  <h3 className="text-2xl font-semibold text-gray-900 mb-3">Artisanal Quality</h3>
+                  <p className="text-gray-500 text-lg leading-relaxed font-light">
+                    Every candle is hand-poured in small batches using premium coconut-soy wax and locally sourced essential oils.
+                  </p>
+                </div>
+              </div>
+            </motion.div>
 
-            <div className="pt-6 relative">
-              <h4 className="text-lg font-bold uppercase tracking-wider text-black mb-2 font-mono group-hover:text-[#b47878] transition-colors">
-                Artisanal Quality
-              </h4>
-              <p className="text-neutral-500 text-xs leading-relaxed">
-                Every candle is hand-poured in small batches using premium coconut-soy wax and locally sourced essential oils.
-              </p>
+            <motion.div
+              initial={{ opacity: 0, x: -40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="group cursor-pointer"
+            >
+              <div className="flex items-start gap-6">
+                <div className="text-8xl font-black text-gray-200 group-hover:text-[#b47878] transition-colors duration-300">02</div>
+                <div>
+                  <h3 className="text-2xl font-semibold text-gray-900 mb-3">Sustainable Sourcing</h3>
+                  <p className="text-gray-500 text-lg leading-relaxed font-light">
+                    Commitment to the environment through plastic-free packaging and supporting local ethical agriculture in Tanzania.
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: -40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="group cursor-pointer"
+            >
+              <div className="flex items-start gap-6">
+                <div className="text-8xl font-black text-gray-200 group-hover:text-[#b47878] transition-colors duration-300">03</div>
+                <div>
+                  <h3 className="text-2xl font-semibold text-gray-900 mb-3">Ancient Wisdom</h3>
+                  <p className="text-gray-500 text-lg leading-relaxed font-light">
+                    Drawing from generations of Tanzanian botanical knowledge passed down through healers and elders.
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, rotateY: 15 }}
+            whileInView={{ opacity: 1, scale: 1, rotateY: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="relative"
+            style={{ perspective: 1000 }}
+          >
+            <div className="relative rounded-3xl overflow-hidden aspect-[4/5] shadow-2xl">
+              <Image
+                src="/src/assets/Gemini_Generated_Image_f4szfzf4szfzf4sz.png"
+                alt=""
+                fill
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+            </div>
+            <div className="absolute -bottom-8 -left-8 w-48 h-48 rounded-full overflow-hidden shadow-xl rotate-12">
+              <Image
+                src="/src/assets/56142.jpg"
+                alt=""
+                fill
+                className="object-cover"
+              />
             </div>
           </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-            className="p-8 bg-white flex flex-col justify-between min-h-[220px] group relative border-4 border-black transition-all duration-75 shadow-[4px_4px_0px_0px_#000000]"
-          >
-            <span className="absolute inset-0 border-t-2 border-l-2 border-black/5 pointer-events-none" />
-            <span className="absolute inset-0 border-b-2 border-r-2 border-black/20 pointer-events-none" />
-
-            <div className="pt-6 relative">
-              <h4 className="text-lg font-bold uppercase tracking-wider text-black mb-2 font-mono group-hover:text-[#b47878] transition-colors">
-                Sustainable Sourcing
-              </h4>
-              <p className="text-neutral-500 text-xs leading-relaxed">
-                Commitment to the environment through plastic-free packaging and supporting local ethical agriculture in Tanzania.
-              </p>
-            </div>
-          </motion.div>
-
         </div>
-
-      </motion.div>
+      </div>
     </section>
-  )
-}
+  );
+};
 
 export const ServicesSection = () => {
-  const keyHighlights = [
+  const services = [
     {
-      title: 'Aromatherapy',
-      desc: 'Blends designed to target specific emotional states: from calming the mind to revitalizing the body.',
-      accent: true,
-      pixelIcon: (
-        <svg width="28" height="28" viewBox="0 0 16 16" fill="none" className="text-black group-hover:text-[#b47878] transition-colors mb-8">
-          <path d="M2 2h4v4H2V2zm8 0h4v4h-4V2zM2 10h4v4H2v-4zm8 0h4v4h-4v-4z" fill="currentColor"/>
-          <path d="M6 4h4v1H6V4zm0 8h4v1H6v-1zM4 6h1v4H4V6zm7 0h1v4h-1V6z" fill="currentColor" opacity="0.3"/>
-        </svg>
-      )
+      title: "Aromatherapy",
+      description: "Blends designed to target specific emotional states: from calming the mind to revitalizing the body.",
+      image: "/src/assets/spa-treatment-dark.jpg"
     },
     {
-      title: 'Home Sanctuary',
-      desc: 'Minimalist designs that complement any space, transforming your home into a high-end wellness retreat.',
-      accent: false,
-      pixelIcon: (
-        <svg width="28" height="28" viewBox="0 0 16 16" fill="none" className="text-black group-hover:text-[#b47878] transition-colors mb-8">
-          <path d="M4 2h8v2H4V2zm-2 4h12v6H2V6zm3 3h6v1H5V9z" fill="currentColor"/>
-          <path d="M5 4h6v2H5V4z" fill="currentColor" opacity="0.2"/>
-        </svg>
-      )
+      title: "Home Sanctuary",
+      description: "Minimalist designs that complement any space, transforming your home into a high-end wellness retreat.",
+      image: "/src/assets/pexels-irina-anastasiu-10540-54512.jpg"
     },
     {
-      title: 'Mindful Rituals',
-      desc: 'Curated sets and workshops that help you build consistent wellness practices into your daily life.',
-      accent: false,
-      pixelIcon: (
-        <svg width="28" height="28" viewBox="0 0 16 16" fill="none" className="text-black group-hover:text-[#b47878] transition-colors mb-8">
-          <path d="M1 5h14v6H1V5zm3 2h8v2H4V7z" fill="currentColor"/>
-          <path d="M6 2h4v3H6V2zm0 9h4v3H6v-3z" fill="currentColor" opacity="0.4"/>
-        </svg>
-      )
-    },
-  ]
+      title: "Mindful Rituals",
+      description: "Curated sets and workshops that help you build consistent wellness practices into your daily life.",
+      image: "/src/assets/pexels-mike-art-visual-creator-photography-and-video-2159421235-36547455.jpg"
+    }
+  ];
 
   return (
-    <section id="products" className="bg-white border-b border-black text-black font-sans antialiased w-full overflow-hidden">
-      <div className="mx-auto flex flex-col lg:flex-row items-stretch w-full">
-        
-        {/* Core Capabilities Descriptive Panel */}
+    <section className="relative bg-gray-50 overflow-hidden py-32">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, y: 60 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="lg:w-4/12 p-8 md:p-12 lg:p-16 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-black bg-white"
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-24"
         >
-          <div className="max-w-xs">
-            <div className="flex items-center gap-1.5 mb-8 select-none">
-              <svg width="20" height="20" viewBox="0 0 10 10" fill="none" className="text-black">
-                <path d="M1 2h8v6H1V2zm2 2h4v2H3V4z" fill="currentColor"/>
-              </svg>
-            </div>
-            
-            <h2 className="text-4xl font-normal tracking-tight uppercase leading-[0.9] mb-6">
-              The Essence of <span className="text-[#b47878] block font-bold">Wellness.</span>
-            </h2>
-            <p className="text-neutral-500 text-xs leading-relaxed font-normal">
-              We create sensory products that facilitate deep connection with oneself and the surrounding environment.
-            </p>
+          <div className="inline-block mb-6">
+            <div className="text-[11px] font-mono tracking-[0.2em] text-[#b47878] font-semibold">02 — SERVICES</div>
+            <div className="h-px w-12 bg-[#b47878] mt-2" />
           </div>
-          
+          <h2 className="text-6xl md:text-7xl lg:text-8xl font-light tracking-tight text-gray-900 leading-[1.1]">
+            The Essence of
+            <br />
+            <span className="font-bold bg-gradient-to-r from-[#b47878] to-[#d4a0a0] bg-clip-text text-transparent">Wellness.</span>
+          </h2>
+          <p className="mt-8 text-gray-500 text-xl max-w-2xl leading-relaxed font-light">
+            We create sensory products that facilitate deep connection with oneself and the surrounding environment.
+          </p>
         </motion.div>
 
-        {/* Content Slots Matrix Cards Grid Row Layout */}
-        <div className="lg:w-8/12 grid grid-cols-1 md:grid-cols-3 items-stretch divide-y md:divide-y-0 md:divide-x divide-black bg-neutral-50/20">
-          {keyHighlights.map((item, i) => (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {services.map((service, index) => (
             <motion.div
-              key={i} 
-              initial={{ opacity: 0, y: 30 }}
+              key={service.title}
+              initial={{ opacity: 0, y: 80 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.15 }}
-              className="p-8 lg:p-10 bg-white flex flex-col justify-between min-h-[380px] relative group hover:bg-neutral-50/40 transition-colors"
+              transition={{ duration: 0.6, delay: index * 0.15, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={{ y: -16 }}
+              className="group cursor-pointer"
             >
-              {/* Asymmetric accent flag at top of highlighted item */}
-              {item.accent && <div className="absolute top-0 left-0 right-0 h-1 bg-[#b47878]" />}
-              
-              <div>
-                <div className="flex items-center justify-between w-full mb-6">
-                  {item.pixelIcon}
-                </div>
+              <div className="relative h-[500px] rounded-3xl overflow-hidden shadow-lg">
+                <Image
+                  src={service.image}
+                  alt=""
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
                 
-                <h3 className="text-sm font-bold uppercase tracking-wider text-black mb-3 group-hover:text-[#b47878] transition-colors font-mono">
-                  {item.title}
-                </h3>
-                <p className="text-neutral-500 text-xs leading-relaxed font-normal">
-                  {item.desc}
-                </p>
+                <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
+                  <div className="text-[#b47878] text-sm font-mono mb-3">0{index + 1}</div>
+                  <h3 className="text-3xl font-semibold mb-3 tracking-tight">{service.title}</h3>
+                  <p className="text-white/80 text-base leading-relaxed font-light">
+                    {service.description}
+                  </p>
+                  <motion.div 
+                    className="mt-6 w-12 h-px bg-white/40 group-hover:w-24 transition-all duration-500"
+                  />
+                </div>
               </div>
             </motion.div>
           ))}
         </div>
-
       </div>
     </section>
-  )
-}
+  );
+};

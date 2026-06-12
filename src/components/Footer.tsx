@@ -74,7 +74,7 @@ export const FinalCTAAndFooter = () => {
           <div className="p-8 lg:p-12 flex flex-col justify-between">
             <div>
               <div className="flex items-center gap-2.5 mb-6">
-                <img src="/Nawwi-logo.png" alt="Nawwi Logo" className="h-6 w-6 object-contain filter grayscale" />
+                <img src="/Nawwi-logo.png" alt="Nawwi Logo" className="h-28 w-28 object-contain filter grayscale" />
                 <span className="text-lg font-bold tracking-tight uppercase text-black">Nawwi</span>
               </div>
               <p className="text-black/50 text-xs leading-relaxed max-w-xs font-normal">
@@ -158,62 +158,24 @@ export const FinalCTAAndFooter = () => {
             </svg>
           </a>
         </div>
-
-        {/* Right Aligned Platform Store Badges (Updated to Tetris UI Button Style) */}
-        <div className="flex items-center gap-4">
-          <div className="text-[10px] font-mono text-neutral-400 mr-1 hidden sm:block font-bold tracking-wider">DOWNLOAD NAWWI</div>
-          
-          {/* Tetris App Store Button */}
-          <a href="#" className="group relative h-11 border-4 border-black bg-black text-white px-4 flex items-center select-none shadow-[3px_3px_0px_0px_#000000] transition-all duration-75 active:translate-x-[3px] active:translate-y-[3px] active:shadow-none">
-            <span className="absolute inset-0 border-t-2 border-l-2 border-white/20 pointer-events-none" />
-            <span className="absolute inset-0 border-b-2 border-r-2 border-black/40 pointer-events-none" />
-            
-            <span className="relative flex items-center gap-2">
-              <svg className="h-4 w-auto" viewBox="0 0 119 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M15.24 17.27c-.03 2.22 1.81 3.29 1.91 3.34-.02.05-.3 1.02-.98 2.02-.59.86-1.2 1.71-2.16 1.73-.94.02-1.25-.56-2.33-.56-1.07 0-1.42.54-2.32.58-.91.03-1.61-.8-2.2-1.67-1.21-1.76-2.14-4.96-.89-7.13.62-1.07 1.72-1.76 2.92-1.77.91-.02 1.76.61 2.32.61.56 0 1.6-.75 2.69-.64.46.02 1.75.18 2.57 1.39-.06.04-1.53.9-1.52 2.67zM13.31 13.54c.46-.57.78-1.35.69-2.15-.68.03-1.51.45-2 1.03-.43.49-.8 1.28-.7 2.07.76.06 1.55-.38 2.01-.95z" fill="currentColor"/>
-              </svg>
-              <span className="text-[9px] font-mono font-bold tracking-widest">APP STORE</span>
-            </span>
-          </a>
-
-          {/* Tetris Google Play Store Button */}
-          <a href="#" className="group relative h-11 border-4 border-black bg-black text-white px-4 flex items-center select-none shadow-[3px_3px_0px_0px_#000000] transition-all duration-75 active:translate-x-[3px] active:translate-y-[3px] active:shadow-none">
-            <span className="absolute inset-0 border-t-2 border-l-2 border-white/20 pointer-events-none" />
-            <span className="absolute inset-0 border-b-2 border-r-2 border-black/40 pointer-events-none" />
-            
-            <span className="relative flex items-center gap-2">
-              <svg className="h-4 w-auto" viewBox="0 0 135 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <g transform="scale(0.32) translate(0, 4)">
-                  <path d="M12.9 6.2c-2.4.7-4.1 2.9-4.1 5.7v92.2c0 2.8 1.7 5 4.1 5.7l50.4-50.4L12.9 6.2z" fill="#00F0FF"/>
-                  <path d="M82.8 52.8L63.3 33.3 12.9 6.2c-.4-.2-.8-.3-1.2-.3-.8 0-1.6.4-2.1 1.1l53.8 53.8 19.4-18z" fill="#00FF75"/>
-                  <path d="M63.3 80.7l19.5-19.5 6.9-4c2.1-1.2 3.3-3.4 3.3-5.8s-1.2-4.6-3.3-5.8l-6.9-4-19.5 19.5 19.5 19.6z" fill="#FFC800"/>
-                  <path d="M82.8 61.2l-19.5 19.5-50.4 50.4c.5.7 1.3 1.1 2.1 1.1.4 0 .8-.1 1.2-.3l50.4-27.1 16.2-43.6z" fill="#FF3B30"/>
-                </g>
-              </svg>
-              <span className="text-[9px] font-mono font-bold tracking-widest">GOOGLE PLAY</span>
-            </span>
-          </a>
-        </div>
       </div>
 
-      {/* SECTION 4: Centered Giant Pixel Mascot Container */}
-      <div className="w-full flex justify-center items-end pt-12 bg-white overflow-hidden select-none pointer-events-none">
-        <motion.svg
-          initial={{ y: 60 }}
-          whileInView={{ y: 4 }}
+      {/* SECTION 4: Replaced Centered Giant Pixel Mascot with Logo */}
+      <div className="w-full flex justify-center items-center pt-12 pb-6 bg-white overflow-hidden">
+        <motion.div
+          initial={{ y: 60, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          width="160" 
-          height="140" 
-          viewBox="0 0 16 14" 
-          fill="none" 
-          className="text-black"
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="flex items-center gap-2"
         >
-          <path 
-            d="M2 0h2v2H2V0zm10 0h2v2h-2V0zM2 2h2v2H2V2zm10 0h2v2h-2V2zM0 4h16v6H0V4zm2 2h2v2H2V6zm10 0h2v2h-2V6zm-6 4h4v2H6v-2zm-2 2h8v2H4v-2z" 
-            fill="currentColor" 
+          <img 
+            src="/Nawwi-logo.png" 
+            alt="Nawwi Logo" 
+            className="h-28 w-28 object-contain"
           />
-        </motion.svg>
+          <span className="text-xl font-black tracking-tighter text-black font-serif italic">NAWWI</span>
+        </motion.div>
       </div>
 
       {/* SECTION 5: Absolute Bottom Meta Bar */}
@@ -221,14 +183,12 @@ export const FinalCTAAndFooter = () => {
         <div className="max-w-7xl mx-auto flex flex-row items-center justify-between text-[10px] font-mono text-black/40 font-bold tracking-wider">
           
           <div>
-            Nawwi Group Ltd © {new Date().getFullYear()}
+            Nawwi Wellness © {new Date().getFullYear()}
           </div>
 
           <div className="flex items-center gap-6">
-            <a href="#" className="hover:text-[#b47878] transition-colors uppercase">Privacy</a>
-            <a href="#" className="hover:text-[#b47878] transition-colors uppercase">Terms</a>
             <div className="flex items-center gap-4">
-              {['en', 'sw', 'pl'].map(lang => (
+              {['en', 'sw'].map(lang => (
                 <button
                   key={lang}
                   onClick={() => setLanguage(lang as any)}
