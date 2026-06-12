@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { supabase } from '@/lib/supabase';
 import Link from 'next/link';
-import { Calendar, MapPin, Users } from 'lucide-react';
+import { Calendar, MapPin, Users, ChevronRight } from 'lucide-react';
 
 export default function EventsPage() {
   const [events, setEvents] = useState<any[]>([]);
@@ -25,60 +25,91 @@ export default function EventsPage() {
   }, []);
 
   return (
-    <div className="pt-32 pb-20 px-6 max-w-7xl mx-auto">
+    <div className="pt-40 pb-24 px-6 max-w-5xl mx-auto min-h-screen font-sans antialiased text-neutral-900">
+      
+      {/* Page Heading Section without background grid overlays */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
-        className="mb-12"
+        transition={{ duration: 0.5, ease: 'easeOut' }}
+        className="mb-16"
       >
-        <h1 className="text-5xl md:text-7xl font-serif mb-4">Wellness Events</h1>
-        <p className="text-lg text-gray-600 max-w-2xl font-light">
+        <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-neutral-900 mb-4">
+          Wellness Events
+        </h1>
+        <p className="text-sm text-neutral-500 max-w-2xl font-normal leading-relaxed tracking-wide">
           Immersive sensory experiences, scent-making workshops, and wellness retreats across Tanzania.
         </p>
       </motion.div>
 
       {loading ? (
-        <div className="space-y-6">
+        <div className="space-y-4">
           {[1, 2].map(i => (
-            <div key={i} className="h-48 bg-gray-100 animate-pulse" />
+            <div key={i} className="h-44 bg-neutral-100 rounded-xl animate-pulse" />
           ))}
         </div>
       ) : (
-        <div className="grid gap-8">
+        <div className="flex flex-col gap-4">
           {events.map((event) => (
             <motion.div
               key={event.id}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="group border border-neutral-200 hover:border-[#b47878] transition-colors p-8 flex flex-col md:flex-row justify-between items-center gap-8"
+              transition={{ duration: 0.5 }}
+              className="bg-white border border-neutral-200/80 rounded-xl p-6 md:p-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 shadow-sm group hover:border-neutral-900/40 transition-all"
             >
-              <div className="flex-1 space-y-4">
-                <div className="flex items-center gap-4 text-xs font-bold uppercase tracking-widest text-[#b47878]">
-                  <span className="flex items-center gap-1"><Calendar size={14} /> {new Date(event.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
-                  <span className="flex items-center gap-1"><MapPin size={14} /> {event.venue}</span>
+              {/* Event Meta Information */}
+              <div className="flex-1 space-y-3">
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[10px] font-bold uppercase tracking-wider text-neutral-400">
+                  <span className="flex items-center gap-1">
+                    <Calendar size={12} className="opacity-70" /> 
+                    {new Date(event.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <MapPin size={12} className="opacity-70" /> 
+                    {event.venue}
+                  </span>
                 </div>
-                <h3 className="text-3xl font-serif">{event.title}</h3>
-                <p className="text-gray-600 max-w-xl">{event.description}</p>
-                <div className="flex items-center gap-2 text-sm text-gray-400">
-                  <Users size={16} /> {event.seats_remaining} seats remaining
+                
+                <h3 className="text-xl md:text-2xl font-bold tracking-tight text-neutral-900">
+                  {event.title}
+                </h3>
+                
+                <p className="text-neutral-500 text-xs leading-relaxed max-w-xl">
+                  {event.description}
+                </p>
+                
+                <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-neutral-400 pt-1">
+                  <Users size={12} className="opacity-60" /> 
+                  <span>{event.seats_remaining} slots remaining</span>
                 </div>
               </div>
 
-              <div className="text-center md:text-right space-y-4">
-                <p className="text-3xl font-serif">${event.price}</p>
+              {/* Pricing and Action Block */}
+              <div className="w-full md:w-auto flex md:flex-col items-center md:items-end justify-between md:justify-center gap-4 pt-4 md:pt-0 border-t md:border-t-0 border-neutral-100">
+                <div>
+                  <span className="text-[9px] font-bold uppercase tracking-wider text-neutral-400 block md:text-right mb-0.5">Admission</span>
+                  <p className="text-xl md:text-2xl font-bold tracking-tight text-neutral-900">${event.price}</p>
+                </div>
+                
                 <Link
                   href={`/events/${event.id}`}
-                  className="inline-block bg-black text-white px-8 py-4 font-bold uppercase tracking-widest hover:bg-[#b47878] transition-colors"
+                  className="group px-5 py-2.5 bg-neutral-950 hover:bg-neutral-900 text-white rounded-lg text-xs font-medium tracking-wide transition-all shadow-sm flex items-center gap-1.5 whitespace-nowrap"
                 >
                   Book Tickets
+                  <ChevronRight className="h-3.5 w-3.5 opacity-80 transition-transform group-hover:translate-x-0.5" />
                 </Link>
               </div>
             </motion.div>
           ))}
+
+          {/* Empty Curator Placeholder State */}
           {events.length === 0 && (
-            <div className="py-20 text-center border border-dashed border-gray-300">
-              <p className="text-gray-500 italic">We are curating new experiences. Check back soon for our next wellness event.</p>
+            <div className="py-16 text-center border border-dashed border-neutral-200 rounded-xl bg-neutral-50/50">
+              <p className="text-neutral-400 font-medium text-xs tracking-wide">
+                We are curating new experiences. Check back soon for our next wellness session.
+              </p>
             </div>
           )}
         </div>

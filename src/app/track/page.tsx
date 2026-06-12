@@ -51,24 +51,34 @@ function TrackContent() {
   const currentStepIndex = steps.findIndex(s => s.key === order?.status) || 0;
 
   return (
-    <div className="pt-32 pb-20 px-6 max-w-3xl mx-auto min-h-screen">
+    <div className="pt-40 pb-24 px-6 max-w-3xl mx-auto min-h-screen font-sans antialiased text-neutral-900">
+      
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: 'easeOut' }}
         className="text-center mb-12"
       >
-        <h1 className="text-4xl md:text-5xl font-serif mb-4">Track Order</h1>
-        <p className="text-gray-500">Enter your order details to see real-time status.</p>
+        <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-neutral-900 mb-4">
+          Track Order
+        </h1>
+        <p className="text-neutral-500 text-xs tracking-wide">
+          Enter your information to locate your parcel.
+        </p>
       </motion.div>
 
-      <form onSubmit={handleTrack} className="bg-white p-8 rounded-3xl border border-neutral-100 shadow-sm mb-12 flex flex-col md:flex-row gap-4">
+      {/* Input Module Block */}
+      <form 
+        onSubmit={handleTrack} 
+        className="bg-white border border-neutral-200/80 rounded-xl p-5 flex flex-col md:flex-row gap-3 shadow-sm mb-12"
+      >
         <input
           required
           type="text"
           placeholder="Order ID"
           value={orderId}
           onChange={(e) => setOrderId(e.target.value)}
-          className="flex-1 px-6 py-4 rounded-xl border border-neutral-100 focus:border-[#b47878] outline-none transition-colors"
+          className="flex-1 px-4 py-3 bg-neutral-50/50 border border-neutral-200/60 rounded-lg text-xs font-medium placeholder-neutral-400 focus:bg-white focus:border-neutral-900 outline-none transition-all"
         />
         <input
           required
@@ -76,47 +86,53 @@ function TrackContent() {
           placeholder="Email Address"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="flex-1 px-6 py-4 rounded-xl border border-neutral-100 focus:border-[#b47878] outline-none transition-colors"
+          className="flex-1 px-4 py-3 bg-neutral-50/50 border border-neutral-200/60 rounded-lg text-xs font-medium placeholder-neutral-400 focus:bg-white focus:border-neutral-900 outline-none transition-all"
         />
         <button
           type="submit"
           disabled={loading}
-          className="bg-black text-white px-8 py-4 rounded-xl font-bold uppercase tracking-widest hover:bg-[#b47878] transition-colors flex items-center justify-center gap-2"
+          className="bg-neutral-950 text-white px-6 py-3 rounded-lg text-xs font-medium tracking-wide hover:bg-neutral-900 active:scale-[0.99] disabled:opacity-50 transition-all flex items-center justify-center gap-2"
         >
-          <Search size={18} />
+          <Search size={14} />
           {loading ? 'Searching...' : 'Track'}
         </button>
       </form>
 
       {error && (
-        <div className="text-center text-red-500 font-bold p-4 bg-red-50 rounded-xl mb-12">
+        <motion.div 
+          initial={{ opacity: 0, y: 5 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center text-red-600 text-xs font-medium p-4 bg-red-50 border border-red-100 rounded-lg mb-12"
+        >
           {error}
-        </div>
+        </motion.div>
       )}
 
       {order && (
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="space-y-8"
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="space-y-6"
         >
-          <div className="bg-neutral-50 p-8 rounded-3xl border border-neutral-200">
-            <div className="flex justify-between items-center mb-12">
+          {/* Status Monitor Grid Box */}
+          <div className="bg-white border border-neutral-200/80 rounded-xl p-8 shadow-sm">
+            <div className="grid grid-cols-2 gap-4 border-b border-neutral-100 pb-8 mb-10">
               <div>
-                <h3 className="text-xs font-bold uppercase tracking-widest text-neutral-400 mb-1">Status</h3>
-                <p className="text-2xl font-serif capitalize">{order.status}</p>
+                <span className="text-[9px] font-bold uppercase tracking-wider text-neutral-400 block mb-1">Status</span>
+                <p className="text-xl font-bold tracking-tight text-neutral-900 capitalize">{order.status}</p>
               </div>
               <div className="text-right">
-                <h3 className="text-xs font-bold uppercase tracking-widest text-neutral-400 mb-1">Last Updated</h3>
-                <p className="text-sm font-bold">{new Date(order.created_at).toLocaleDateString()}</p>
+                <span className="text-[9px] font-bold uppercase tracking-wider text-neutral-400 block mb-1">Last Updated</span>
+                <p className="text-xs font-medium text-neutral-600">{new Date(order.created_at).toLocaleDateString()}</p>
               </div>
             </div>
 
-            {/* Stepper */}
-            <div className="relative flex justify-between">
-              <div className="absolute top-1/2 left-0 w-full h-0.5 bg-neutral-200 -translate-y-1/2 z-0" />
+            {/* Status Flow Indicators */}
+            <div className="relative flex justify-between px-2">
+              <div className="absolute top-5 left-0 w-full h-px bg-neutral-200/80 -translate-y-1/2 z-0" />
               <div
-                className="absolute top-1/2 left-0 h-0.5 bg-[#b47878] -translate-y-1/2 z-0 transition-all duration-1000"
+                className="absolute top-5 left-0 h-px bg-neutral-950 -translate-y-1/2 z-0 transition-all duration-1000 ease-out"
                 style={{ width: `${(currentStepIndex / (steps.length - 1)) * 100}%` }}
               />
 
@@ -128,11 +144,17 @@ function TrackContent() {
                 return (
                   <div key={step.key} className="relative z-10 flex flex-col items-center">
                     <div
-                      className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors duration-500 ${isCompleted ? 'bg-[#b47878] text-white' : 'bg-white border-2 border-neutral-200 text-neutral-300'}`}
+                      className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-500 border ${
+                        isCompleted 
+                          ? 'bg-neutral-950 text-white border-neutral-950' 
+                          : 'bg-white border-neutral-200/80 text-neutral-300'
+                      }`}
                     >
-                      <Icon size={20} />
+                      <Icon size={16} />
                     </div>
-                    <span className={`absolute -bottom-8 whitespace-nowrap text-[10px] font-bold uppercase tracking-widest ${isActive ? 'text-black' : 'text-neutral-400'}`}>
+                    <span className={`absolute -bottom-7 whitespace-nowrap text-[9px] font-bold uppercase tracking-wider ${
+                      isActive ? 'text-neutral-900' : 'text-neutral-400'
+                    }`}>
                       {step.label}
                     </span>
                   </div>
@@ -141,18 +163,22 @@ function TrackContent() {
             </div>
           </div>
 
-          <div className="bg-white p-8 rounded-3xl border border-neutral-100 shadow-sm">
-            <h3 className="text-xs font-bold uppercase tracking-widest text-neutral-400 mb-6">Order Details</h3>
-            <div className="space-y-4">
+          {/* Breakdown Ledger Area */}
+          <div className="bg-white border border-neutral-200/80 rounded-xl p-6 shadow-sm">
+            <span className="text-[9px] font-bold uppercase tracking-wider text-neutral-400 block mb-4">
+              Order Content Details
+            </span>
+            <div className="space-y-3.5">
               {order.items?.map((item: any, idx: number) => (
-                <div key={idx} className="flex justify-between text-sm">
-                  <span>{item.name} x {item.quantity}</span>
-                  <span className="font-bold">${(item.price * item.quantity).toFixed(2)}</span>
+                <div key={idx} className="flex justify-between text-xs font-medium text-neutral-600">
+                  <span>{item.name} <span className="text-neutral-400 font-normal ml-1">× {item.quantity}</span></span>
+                  <span className="text-neutral-900">${(item.price * item.quantity).toFixed(2)}</span>
                 </div>
               ))}
-              <div className="border-t border-neutral-100 pt-4 flex justify-between font-serif text-xl">
-                <span>Total</span>
-                <span>${order.total}</span>
+              
+              <div className="border-t border-neutral-100 pt-3.5 flex justify-between items-center text-neutral-900">
+                <span className="text-xs font-bold uppercase tracking-wider">Total Amount</span>
+                <span className="text-base font-bold tracking-tight">${order.total}</span>
               </div>
             </div>
           </div>
@@ -164,7 +190,7 @@ function TrackContent() {
 
 export default function TrackPage() {
   return (
-    <Suspense fallback={<div className="pt-40 text-center font-serif text-2xl">Loading tracker...</div>}>
+    <Suspense fallback={<div className="pt-40 text-center font-medium tracking-wide text-xs text-neutral-400 uppercase">Verifying tracking status...</div>}>
       <TrackContent />
     </Suspense>
   );

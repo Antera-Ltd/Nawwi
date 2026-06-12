@@ -1,68 +1,84 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Navbar } from '@/components/Navbar';
-import { FinalCTAAndFooter } from '@/components/Footer';
 import { motion } from 'framer-motion';
-import { Sparkles, ArrowRight } from 'lucide-react';
-import Link from 'next/link';
+import { ArrowRight } from 'lucide-react';
 
 export default function QuizPage() {
   return (
-    <main className="min-h-screen bg-[#eadada]">
+    <main className="min-h-screen bg-[#f6f5f1] font-sans antialiased overflow-hidden selection:bg-neutral-950 selection:text-white flex flex-col justify-between">
       <Navbar />
 
-      <section className="pt-32 pb-20 px-6">
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#b47878]/10 text-[#b47878] text-xs font-bold uppercase tracking-widest mb-6"
-          >
-            <Sparkles className="w-3 h-3" />
-            AI Scent Concierge
-          </motion.div>
+      <section className="relative pt-40 pb-24 px-6 flex-1 flex flex-col justify-center items-center">
+        {/* Alignment Grid Overlay matches the Mistral look */}
+        <div className="absolute inset-0 z-0 opacity-[0.05] pointer-events-none" style={{
+          backgroundImage: `
+            linear-gradient(to right, #000 1px, transparent 1px),
+            linear-gradient(to bottom, #000 1px, transparent 1px)
+          `,
+          backgroundSize: '44px 44px',
+          backgroundPosition: 'center center'
+        }} />
 
+        {/* Perfectly center-aligned content wrapper block */}
+        <div className="relative z-10 max-w-4xl mx-auto text-center flex flex-col items-center justify-center">
+          
+          {/* Small uppercase category tag line tracking element */}
+          <motion.span
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: 'easeOut' }}
+            className="text-[10px] font-semibold tracking-[0.25em] text-neutral-400 uppercase mb-6 block"
+          >
+            AI Scent Agent
+          </motion.span>
+
+          {/* Clean heavy bold compressed display title spacing */}
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-5xl md:text-7xl font-serif text-black mb-8 italic"
+            transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            className="text-4xl md:text-6xl lg:text-[72px] font-bold tracking-tight text-neutral-900 leading-[1.1] max-w-3xl mb-6 font-sans"
           >
-            Find Your Signature Scent
+            Find Your Signature
+            <br />
+            Atmosphere
           </motion.h1>
 
+          {/* Centered narrative paragraph block */}
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-lg text-gray-700 mb-12 max-w-2xl mx-auto"
+            transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="text-neutral-600 text-base md:text-lg font-normal max-w-2xl leading-relaxed mb-12 tracking-wide"
           >
-            Our AI-powered scent quiz analyzes your mood, environment, and preferences to recommend the perfect Nawwi Wellness candle for your space.
+            Our diagnostic routine analyzes your mood, environment, and preferences to map out the perfect custom candle pairings fitted precisely for your living spaces.
           </motion.p>
 
+          {/* Minimal Instruction Card Area */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="bg-white p-12 rounded-3xl border border-black shadow-[8px_8px_0px_0px_#b47878] inline-block"
+            transition={{ duration: 0.7, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="bg-white border border-neutral-200/80 rounded-xl p-8 max-w-md w-full shadow-sm flex flex-col items-center"
           >
-            <h3 className="text-2xl font-bold text-black mb-4 uppercase tracking-tight">Ready to begin?</h3>
-            <p className="text-gray-500 mb-8">Click the chat icon in the bottom right corner to start your personalized journey.</p>
-            <div className="flex justify-center">
-              <motion.div
-                animate={{ x: [0, 10, 0] }}
-                transition={{ repeat: Infinity, duration: 2 }}
-                className="text-[#b47878]"
-              >
-                <ArrowRight className="w-8 h-8 rotate-45" />
-              </motion.div>
-            </div>
+            <h3 className="text-sm font-bold text-neutral-900 uppercase tracking-wider mb-2">Ready to begin?</h3>
+            <p className="text-xs text-neutral-500 leading-relaxed mb-6 text-center">
+              Click the chat assistant interface icon in the bottom right corner of your screen to trigger your personalized consulting session.
+            </p>
+            
+            <motion.div
+              animate={{ y: [0, 4, 0] }}
+              transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
+              className="text-neutral-400 flex items-center justify-center p-2 bg-neutral-50 border border-neutral-100 rounded-lg"
+            >
+              <ArrowRight className="w-5 h-5 rotate-45 text-neutral-800" />
+            </motion.div>
           </motion.div>
+
         </div>
       </section>
-
-      <FinalCTAAndFooter />
     </main>
   );
 }
