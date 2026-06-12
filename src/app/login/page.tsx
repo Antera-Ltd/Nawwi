@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
@@ -14,13 +14,33 @@ export default function LoginPage() {
   const [isRegistering, setIsRegistering] = useState(false);
   const router = useRouter();
 
+  useEffect(() => {
+    const checkUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('role')
+          .eq('id', user.id)
+          .single();
+
+        if (profile?.role === 'admin') {
+          router.push('/admin');
+        } else {
+          router.push('/shop');
+        }
+      }
+    };
+    checkUser();
+  }, [router]);
+
   const handleGoogleLogin = async () => {
     setLoading(true);
     setError('');
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${window.location.origin}/shop`,
+        redirectTo: `${window.location.origin}/login`,
       },
     });
     if (error) {
@@ -64,8 +84,18 @@ export default function LoginPage() {
       } else {
         // Check if admin or normal user redirect
         const { data: { user } } = await supabase.auth.getUser();
-        if (user?.email === 'admin@nawwi.com' || user?.email?.endsWith('@nawwi.com')) {
-          router.push('/admin');
+        if (user) {
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('role')
+            .eq('id', user.id)
+            .single();
+
+          if (profile?.role === 'admin') {
+            router.push('/admin');
+          } else {
+            router.push('/shop');
+          }
         } else {
           router.push('/shop');
         }

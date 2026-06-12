@@ -26,12 +26,21 @@ export default function AdminDashboard() {
       if (!session) {
         router.push('/login');
       } else {
-        // Simple admin check: either explicit flag in metadata or email domain/match
         const { data: { user } } = await supabase.auth.getUser();
-        if (user?.email === 'admin@nawwi.com' || user?.email?.endsWith('@nawwi.com')) {
-           fetchData();
+        if (user) {
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('role')
+            .eq('id', user.id)
+            .single();
+
+          if (profile?.role === 'admin') {
+            fetchData();
+          } else {
+            router.push('/shop');
+          }
         } else {
-           router.push('/shop');
+          router.push('/login');
         }
       }
     };
