@@ -1,9 +1,13 @@
 'use client';
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import { ArrowUpRight, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+
+// Import all images from src/assets folder
+import spaTreatment from '../assets/spa-treatment-dark.jpg';
+import pexelsHome from '../assets/candle-6.png';
 
 export const CommunicationSection = () => {
   const categories = [
@@ -16,61 +20,44 @@ export const CommunicationSection = () => {
   ];
 
   return (
-    <section id="solutions" className="bg-[#fcfcfc] py-24 px-6 border-b border-gray-100 font-sans antialiased w-full overflow-hidden">
-      <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-start gap-16">
+    <section id="solutions" className="bg-[#fcfcfc] py-32 px-6 md:px-12 border-b border-neutral-200 font-sans antialiased w-full overflow-hidden selection:bg-neutral-900 selection:text-white">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24">
         
-        {/* Left Side: Clean Hero Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="lg:w-5/12 flex flex-col justify-between"
-        >
-          <div>
-            <div className="flex items-center gap-4 text-gray-400 font-mono text-xs mb-6 tracking-widest uppercase">
-              <span>@collections</span>
-              <span className="w-1 h-1 bg-gray-300 rounded-full" />
-              <span>@sanctuary</span>
-            </div>
+        {/* Left Column */}
+        <div className="lg:col-span-4 lg:sticky lg:top-24 space-y-6">
+          <h2 className="text-4xl md:text-5xl font-light tracking-tight text-neutral-900 leading-[1.05]">
+            Curated Scent <br />
+            <span className="font-semibold text-neutral-900">Collections</span>
+          </h2>
+          
+          <p className="text-neutral-500 text-sm leading-relaxed max-w-xs font-light">
+            Explore our diverse range of fragrance families, each designed to evoke a specific memory, mood, or atmosphere in your sanctuary.
+          </p>
+        </div>
 
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 leading-[1.15] mb-6">
-              Curated Scent <br />
-              <span className="text-gray-400 font-light italic">Collections</span>
-            </h2>
-            
-            <p className="text-gray-500 text-sm leading-relaxed max-w-sm font-light">
-              Explore our diverse range of fragrance families, each designed to evoke a specific memory, mood, or atmosphere in your sanctuary.
-            </p>
-          </div>
-        </motion.div>
-
-        {/* Right Side: Elegant Minimalist Matrix Links */}
-        <div className="lg:w-7/12 w-full grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-12">
+        {/* Right Column */}
+        <div className="lg:col-span-8 w-full border-t border-l border-neutral-200 grid grid-cols-1 sm:grid-cols-2">
           {categories.map((category, i) => (
-            <motion.a
+            <Link
               href={`/shop?category=${encodeURIComponent(category.name)}`}
               key={i} 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.05 }}
-              className="group flex flex-col justify-between border-t border-gray-100 pt-6 relative transition-all"
+              className="group p-8 border-r border-b border-neutral-200 flex flex-col justify-between aspect-[4/3] bg-[#fcfcfc] hover:bg-white transition-all duration-300 relative overflow-hidden"
             >
-              <div className="flex items-center justify-between text-gray-300 font-mono text-xs mb-4">
-                <span>{category.count}</span>
-                <span className="w-1.5 h-1.5 rounded-full bg-transparent group-hover:bg-black transition-colors" />
+              <div className="flex items-start justify-between">
+                <span className="font-mono text-xs text-neutral-300 group-hover:text-neutral-900 transition-colors duration-300 font-medium">
+                  {category.count}
+                </span>
               </div>
 
-              <div className="flex items-center justify-between gap-4 mt-2">
-                <h3 className="text-lg font-medium text-gray-900 group-hover:text-gray-600 transition-colors">
+              <div className="flex items-end justify-between mt-auto">
+                <h3 className="text-lg font-medium text-neutral-900 tracking-tight">
                   {category.name}
                 </h3>
-                <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-black transition-all duration-300">
-                  <ArrowRight className="w-3.5 h-3.5 text-gray-400 group-hover:text-white transition-colors transform -translate-x-0.5 group-hover:translate-x-0" />
+                <div className="w-8 h-8 rounded-full border border-neutral-200 flex items-center justify-center group-hover:bg-neutral-900 group-hover:border-neutral-900 transition-all duration-300">
+                  <ArrowUpRight className="w-3.5 h-3.5 text-neutral-400 group-hover:text-white transition-colors duration-300" />
                 </div>
               </div>
-            </motion.a>
+            </Link>
           ))}
         </div>
 
@@ -81,93 +68,71 @@ export const CommunicationSection = () => {
 
 export const ApplicationSection = () => {
   return (
-    <section className="bg-white py-24 px-6 border-b border-gray-100 text-black font-sans antialiased w-full flex flex-col overflow-hidden">
-      
-      {/* Structural Sub-header Horizontal Banner */}
-      <div className="max-w-6xl mx-auto w-full mb-16">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="flex flex-col md:flex-row items-start md:items-end justify-between gap-6 pb-8 border-b border-gray-100"
-        >
-          <div className="max-w-xl">
-            <div className="text-xs font-mono tracking-widest text-gray-400 uppercase mb-3">02 / Experiences</div>
-            <h2 className="text-4xl font-bold tracking-tight text-gray-900">
-              Immersive Experiences
+    <section className="bg-white py-32 px-6 md:px-12 border-b border-neutral-200 text-neutral-900 font-sans antialiased w-full overflow-hidden selection:bg-neutral-900 selection:text-white">
+      <div className="max-w-7xl mx-auto">
+        
+        {/* Header */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pb-16 border-b border-neutral-200 mb-20 items-end">
+          <div className="lg:col-span-6">
+            <h2 className="text-4xl font-light tracking-tight text-neutral-900 leading-none">
+              Immersive <span className="font-semibold">Experiences</span>
             </h2>
           </div>
-          <p className="text-gray-500 text-sm max-w-sm leading-relaxed font-light">
-            Beyond products, we offer guided workshops and retreats that teach you the art of scent-making and mindful living in beautiful Tanzanian settings.
-          </p>
-        </motion.div>
-      </div>
-
-      {/* Main Split Grid Block Layout */}
-      <div className="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-16">
-        
-        {/* Left Slot: Workshops */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="flex flex-col justify-between group"
-        >
-          <div className="mb-6">
-            <h3 className="text-xl font-semibold text-gray-900 mb-3">
-              Scent-Making Workshops
-            </h3>
-            <p className="text-gray-500 text-sm leading-relaxed max-w-md font-light">
-              Learn to blend botanical extracts and pour your own signature candles in our monthly intimate workshops.
+          <div className="lg:col-span-6 flex lg:justify-end">
+            <p className="text-neutral-500 text-sm max-w-sm leading-relaxed font-light">
+              Beyond products, we offer guided workshops and retreats that teach you the art of scent-making and mindful living in beautiful settings.
             </p>
           </div>
-          
-          <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden bg-gray-50 shadow-sm mt-4">
-            <Image 
-              src="/src/assets/spa-treatment-dark.jpg" 
-              alt="Workshops" 
-              fill 
-              className="object-cover group-hover:scale-102 transition-transform duration-700 ease-out"
-            />
-            {/* Screenshot 2 style pill labels overlay */}
-            <span className="absolute top-4 right-4 bg-white px-3 py-1 rounded-full text-[10px] font-medium tracking-wide shadow-sm text-black">
-              Monthly
-            </span>
-          </div>
-        </motion.div>
+        </div>
 
-        {/* Right Slot: Retreats */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.1 }}
-          className="flex flex-col justify-between group lg:mt-12"
-        >
-          <div className="mb-6">
-            <h3 className="text-xl font-semibold text-gray-900 mb-3">
-              Wellness Retreats
-            </h3>
-            <p className="text-gray-500 text-sm leading-relaxed max-w-md font-light">
-              Escape to our partner venues for multi-day sensory journeys focused on meditation, aromatherapy, and grounding.
-            </p>
-          </div>
+        {/* Layout Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-stretch">
           
-          <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden bg-gray-50 shadow-sm mt-4">
-            <Image 
-              src="/src/assets/pexels-irina-anastasiu-10540-54512.jpg" 
-              alt="Retreats" 
-              fill 
-              className="object-cover group-hover:scale-102 transition-transform duration-700 ease-out"
-            />
-            <span className="absolute top-4 right-4 bg-white px-3 py-1 rounded-full text-[10px] font-medium tracking-wide shadow-sm text-black">
-              Guided
-            </span>
+          {/* Left Column */}
+          <div className="lg:col-span-7 flex flex-col justify-between group cursor-pointer">
+            <div className="relative aspect-[16/10] w-full overflow-hidden bg-neutral-50 border border-neutral-200">
+              <Image 
+                src={spaTreatment} 
+                alt="Workshops" 
+                fill 
+                className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500 ease-in-out"
+                sizes="(max-w-1024px) 100vw, 700px"
+              />
+            </div>
+            <div className="mt-6 flex justify-between items-start gap-4 border-b border-neutral-100 pb-6">
+              <div>
+                <h3 className="text-xl font-medium text-neutral-900 tracking-tight">Scent-Making Workshops</h3>
+                <p className="text-neutral-500 text-sm font-light mt-2 max-w-md leading-relaxed">
+                  Learn to blend botanical extracts and pour your own signature candles in our monthly intimate workshops.
+                </p>
+              </div>
+              <span className="text-xs font-medium text-neutral-400 bg-neutral-50 px-2.5 py-1 border border-neutral-200 rounded">Monthly</span>
+            </div>
           </div>
-        </motion.div>
 
+          {/* Right Column */}
+          <div className="lg:col-span-5 flex flex-col justify-between group cursor-pointer lg:pt-20">
+            <div className="relative aspect-[4/5] w-full overflow-hidden bg-neutral-50 border border-neutral-200">
+              <Image 
+                src={pexelsHome} 
+                alt="Retreats" 
+                fill 
+                className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500 ease-in-out"
+                sizes="(max-w-1024px) 100vw, 500px"
+              />
+            </div>
+            <div className="mt-6 flex justify-between items-start gap-4 border-b border-neutral-100 pb-6">
+              <div>
+                <h3 className="text-xl font-medium text-neutral-900 tracking-tight">Wellness Retreats</h3>
+                <p className="text-neutral-500 text-sm font-light mt-2 leading-relaxed">
+                  Escape to our partner venues for multi-day sensory journeys focused on meditation, aromatherapy, and grounding.
+                </p>
+              </div>
+              <span className="text-xs font-medium text-neutral-400 bg-neutral-50 px-2.5 py-1 border border-neutral-200 rounded">Guided</span>
+            </div>
+          </div>
+
+        </div>
       </div>
     </section>
   );
@@ -184,63 +149,49 @@ export const DataIntelligenceSection = () => {
   ];
 
   return (
-    <section id="models" className="bg-[#fcfcfc] py-24 px-6 border-b border-gray-100 text-black font-sans antialiased w-full overflow-hidden">
-      <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-16">
+    <section id="models" className="bg-[#fcfcfc] py-32 px-6 md:px-12 border-b border-neutral-200 text-neutral-900 font-sans antialiased w-full overflow-hidden selection:bg-neutral-900 selection:text-white">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
         
-        {/* Left Side: Clean Horizontal Strip Grid for Pillars */}
-        <div className="lg:w-7/12 w-full order-2 lg:order-1 grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {/* Left Column */}
+        <div className="lg:col-span-7 w-full order-2 lg:order-1 grid grid-cols-1 sm:grid-cols-2 gap-px bg-neutral-200 border border-neutral-200 overflow-hidden">
           {pillars.map((p, i) => (
-            <motion.div
+            <div
               key={i}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.05 }}
-              className="p-6 bg-white rounded-xl border border-gray-100 flex items-center justify-between group hover:shadow-md hover:border-gray-200 transition-all duration-300"
+              className="p-6 bg-[#fcfcfc] hover:bg-white flex flex-col justify-between h-28 group transition-colors duration-300"
             >
-              <h4 className="text-base font-medium text-gray-800 group-hover:text-black transition-colors">
-                {p.title}
-              </h4>
-              <span className="w-1.5 h-1.5 bg-gray-200 rounded-full group-hover:bg-black transition-colors" />
-            </motion.div>
+              <div className="flex items-center justify-between mt-auto">
+                <h4 className="text-sm font-medium text-neutral-800 group-hover:text-neutral-900 transition-colors tracking-tight">
+                  {p.title}
+                </h4>
+                <div className="w-1.5 h-1.5 bg-neutral-200 group-hover:bg-neutral-900 transition-colors duration-300" />
+              </div>
+            </div>
           ))}
         </div>
 
-        {/* Right Side: Copy Block & Pill CTA */}
-        <motion.div
-          initial={{ opacity: 0, x: 30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="lg:w-5/12 w-full order-1 lg:order-2 flex flex-col"
-        >
-          <div>
-            <div className="flex items-center gap-4 text-gray-400 font-mono text-xs mb-6 tracking-widest uppercase">
-              <span>@neurology</span>
-              <span className="w-1 h-1 bg-gray-300 rounded-full" />
-              <span>@concierge</span>
-            </div>
-
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 leading-[1.15] mb-6">
+        {/* Right Column */}
+        <div className="lg:col-span-5 w-full order-1 lg:order-2 space-y-6 lg:pl-6">
+          <div className="space-y-4">
+            <h2 className="text-4xl font-light tracking-tight text-neutral-900 leading-[1.05]">
               Science of <br />
-              <span className="text-gray-400 font-light italic">Scent Healing</span>
+              <span className="font-semibold text-neutral-900">Scent Healing</span>
             </h2>
             
-            <p className="text-gray-500 text-sm leading-relaxed mb-10 font-light">
+            <p className="text-neutral-500 text-sm leading-relaxed font-light">
               Our AI-driven scent concierge leverages neurological data to recommend the exact fragrance profiles needed to balance your energy and atmosphere.
             </p>
-            
+          </div>
+          
+          <div className="pt-4">
             <Link 
               href="/quiz" 
-              className="inline-flex items-center justify-between bg-[#141414] text-white px-6 py-4 rounded-full text-xs font-semibold uppercase tracking-wider hover:bg-black transition-all shadow-md group w-full sm:max-w-xs"
+              className="inline-flex items-center justify-between bg-neutral-900 hover:bg-black text-white px-6 py-4 text-xs uppercase tracking-widest transition-all group w-full sm:max-w-xs border border-neutral-900"
             >
               <span>Start Scent Quiz</span>
-              <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors">
-                <ArrowRight className="w-3.5 h-3.5 text-white" />
-              </div>
+              <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" />
             </Link>
           </div>
-        </motion.div>
+        </div>
 
       </div>
     </section>

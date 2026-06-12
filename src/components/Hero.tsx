@@ -1,72 +1,72 @@
 'use client';
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
-import { useLanguage } from '../context/LanguageContext';
 
 export const Hero = () => {
-  const { t } = useLanguage();
   const heroBackgroundUrl = new URL('../assets/hero.jpg', import.meta.url).href;
 
   return (
-    <section className="relative min-h-screen w-full bg-black font-sans antialiased overflow-hidden">
-      {/* Background Image with Sunset Gradient Overlay */}
+    <section className="relative min-h-screen w-full bg-[#f6f5f1] font-sans antialiased overflow-hidden flex flex-col justify-center items-center px-6 selection:bg-neutral-950 selection:text-white">
       <div className="absolute inset-0 z-0">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url(${heroBackgroundUrl})` }}
         />
-        {/* Sunset-inspired gradient overlay: dark -> nawwi accent -> cream-yellow */}
-        <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-[#b47878]/30 to-[#eadada]/20" />
+
+        <div className="absolute inset-0 bg-white/85 backdrop-blur-[1px]" />
       </div>
 
-      {/* Main Content */}
-      <div className="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col justify-center px-6 py-20 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
+
+      <div className="absolute inset-0 z-10 opacity-[0.07] pointer-events-none" style={{
+        backgroundImage: `
+          linear-gradient(to right, #000 1px, transparent 1px),
+          linear-gradient(to bottom, #000 1px, transparent 1px)
+        `,
+        backgroundSize: '44px 44px',
+        backgroundPosition: 'center center'
+      }} />
+
+
+      <div className="relative z-20 max-w-4xl mx-auto text-center flex flex-col items-center justify-center">
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
-          className="max-w-3xl"
+          transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          className="text-4xl md:text-6xl lg:text-[72px] font-bold tracking-tight text-neutral-900 leading-[1.1] max-w-3xl mb-6 font-sans"
         >
-          {/* Editorial-Style Headline (Near-Serif) */}
-          <h1 className="mb-6 text-5xl font-light leading-[1.2] tracking-tight text-white md:text-7xl lg:text-8xl font-serif">
-            The Scent of
-            <br />
-            Serenity
-          </h1>
+          The Scent of
+          <br />
+          Serenity
+        </motion.h1>
 
-          {/* Supporting Copy */}
-          <p className="mb-12 max-w-xl text-base leading-relaxed text-white/80 md:text-lg font-light">
-            Luxury scent-led wellness from the heart of Tanzania. Discover handcrafted candles and immersive sensory experiences.
-          </p>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-wrap items-center gap-6">
-            {/* Tetris Block Style Button */}
-            <button className="group relative border-4 border-black bg-[#b47878] px-6 py-3 font-mono text-sm font-bold uppercase tracking-wider text-white shadow-[4px_4px_0px_0px_#000000] transition-all duration-75 active:translate-x-[4px] active:translate-y-[4px] active:shadow-none">
-              {/* Top/Left inner highlight for 3D brick look */}
-              <span className="absolute inset-0 border-t-2 border-l-2 border-white/40 pointer-events-none" />
-              {/* Bottom/Right inner shadow */}
-              <span className="absolute inset-0 border-b-2 border-r-2 border-black/40 pointer-events-none" />
+        <motion.p
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          className="text-neutral-700 text-base md:text-lg font-normal max-w-2xl leading-relaxed mb-8 tracking-wide"
+        >
+          Luxury scent-led wellness from the heart of Tanzania. Discover handcrafted candles
+          and immersive sensory experiences that bring calm to your everyday.
+        </motion.p>
 
-              <span className="relative flex items-center gap-2">
-                Shop Candles
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </span>
-            </button>
 
-            {/* Tetris Secondary Style Button */}
-            <Link href="/events" className="group relative border-4 border-black bg-zinc-800 px-6 py-3 font-mono text-sm font-bold uppercase tracking-wider text-white shadow-[4px_4px_0px_0px_#000000] transition-all duration-75 active:translate-x-[4px] active:translate-y-[4px] active:shadow-none hover:bg-zinc-700">
-              <span className="absolute inset-0 border-t-2 border-l-2 border-white/20 pointer-events-none" />
-              <span className="absolute inset-0 border-b-2 border-r-2 border-black/60 pointer-events-none" />
-
-              <span className="relative">
-                View Events
-              </span>
-            </Link>
-          </div>
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <Link 
+            href="/shop"
+            className="group px-5 py-2.5 bg-neutral-950 hover:bg-neutral-900 text-white rounded-lg text-xs font-medium tracking-wide transition-all shadow-sm flex items-center gap-2 inline-flex"
+          >
+            Shop Candles
+            <ChevronRight className="h-3.5 w-3.5 opacity-80 transition-transform group-hover:translate-x-0.5" />
+          </Link>
         </motion.div>
+
       </div>
     </section>
   );
