@@ -1,11 +1,13 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { supabase } from '@/lib/supabase';
+import { supabase, uploadImage } from '@/lib/supabase';
+import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { LayoutDashboard, Package, Calendar, ShoppingBag, Plus, Edit, Trash2, X, Save } from 'lucide-react';
+import { LayoutDashboard, Package, Calendar, ShoppingBag, Plus, Edit, Trash2, X, Save, Image as ImageIcon, Upload } from 'lucide-react';
 
 export default function AdminDashboard() {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState('products');
   const [products, setProducts] = useState<any[]>([]);
   const [events, setEvents] = useState<any[]>([]);
@@ -16,9 +18,24 @@ export default function AdminDashboard() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<any>(null);
   const [formData, setFormData] = useState<any>({});
+  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
-    fetchData();
+    const checkUser = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        router.push('/login');
+      } else {
+        // Simple admin check: either explicit flag in metadata or email domain/match
+        const { data: { user } } = await supabase.auth.getUser();
+        if (user?.email === 'admin@nawwi.com' || user?.email?.endsWith('@nawwi.com')) {
+           fetchData();
+        } else {
+           router.push('/shop');
+        }
+      }
+    };
+    checkUser();
   }, [activeTab]);
 
   async function fetchData() {
@@ -42,11 +59,29 @@ export default function AdminDashboard() {
       setFormData(item);
     } else {
       setFormData(activeTab === 'products'
-        ? { name: '', description: '', price: 0, stock: 0, scent_notes: [] }
-        : { title: '', description: '', date: '', venue: '', price: 0, capacity: 0, seats_remaining: 0 }
+        ? { name: '', description: '', price: 0, stock: 0, scent_notes: [], images: [], category: '' }
+        : { title: '', description: '', date: '', venue: '', price: 0, capacity: 0, seats_remaining: 0, image_url: '' }
       );
     }
     setIsModalOpen(true);
+  };
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files || e.target.files.length === 0) return;
+    setUploading(true);
+    try {
+      const url = await uploadImage(e.target.files[0], activeTab === 'products' ? 'products' : 'events');
+      if (activeTab === 'products') {
+        setFormData({ ...formData, images: [...(formData.images || []), url] });
+      } else {
+        setFormData({ ...formData, image_url: url });
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Upload failed');
+    } finally {
+      setUploading(false);
+    }
   };
 
   const handleSave = async (e: React.FormEvent) => {
@@ -258,29 +293,74 @@ export default function AdminDashboard() {
                 {activeTab === 'products' ? (
                   <>
                     <div className="space-y-2">
+                      <label className="text-[10px] font-bold uppercase tracking-widest text-neutral-400">Product Images</label>
+                      <div className="flex flex-wrap gap-4 mb-4">
+                        {formData.images?.map((img: string, idx: number) => (
+                          <div key={idx} className="relative w-20 h-20 border border-neutral-100 rounded-lg overflow-hidden group">
+                            <img src={img} alt="Product" className="w-full h-full object-cover" />
+                            <button
+                              type="button"
+                              onClick={() => setFormData({ ...formData, images: formData.images.filter((_: any, i: number) => i !== idx) })}
+                              className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                            >
+                              <Trash2 size={14} className="text-white" />
+                            </button>
+                          </div>
+                        ))}
+                        <label className="w-20 h-20 border-2 border-dashed border-neutral-200 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:border-[#b47878] transition-colors">
+                          {uploading ? <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-[#b47878]" /> : <Upload size={16} className="text-neutral-400" />}
+                          <span className="text-[8px] font-bold mt-1 uppercase text-neutral-400">Add</span>
+                          <input type="file" className="hidden" accept="image/*" onChange={handleImageUpload} />
+                        </label>
+                      </div>
+                    </div>
+                    <div className="space-y-2">
                       <label className="text-[10px] font-bold uppercase tracking-widest text-neutral-400">Name</label>
-                      <input required type="text" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full px-6 py-4 rounded-xl border border-neutral-100 outline-none focus:border-[#b47878] transition-colors" />
+                      <input required type="text" value={formData.name || ''} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full px-6 py-4 rounded-xl border border-neutral-100 outline-none focus:border-[#b47878] transition-colors" />
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-2">
                         <label className="text-[10px] font-bold uppercase tracking-widest text-neutral-400">Price ($)</label>
-                        <input required type="number" step="0.01" value={formData.price} onChange={e => setFormData({...formData, price: parseFloat(e.target.value)})} className="w-full px-6 py-4 rounded-xl border border-neutral-100 outline-none focus:border-[#b47878] transition-colors" />
+                        <input required type="number" step="0.01" value={formData.price || 0} onChange={e => setFormData({...formData, price: parseFloat(e.target.value)})} className="w-full px-6 py-4 rounded-xl border border-neutral-100 outline-none focus:border-[#b47878] transition-colors" />
                       </div>
                       <div className="space-y-2">
                         <label className="text-[10px] font-bold uppercase tracking-widest text-neutral-400">Stock</label>
-                        <input required type="number" value={formData.stock} onChange={e => setFormData({...formData, stock: parseInt(e.target.value)})} className="w-full px-6 py-4 rounded-xl border border-neutral-100 outline-none focus:border-[#b47878] transition-colors" />
+                        <input required type="number" value={formData.stock || 0} onChange={e => setFormData({...formData, stock: parseInt(e.target.value)})} className="w-full px-6 py-4 rounded-xl border border-neutral-100 outline-none focus:border-[#b47878] transition-colors" />
                       </div>
                     </div>
                     <div className="space-y-2">
                       <label className="text-[10px] font-bold uppercase tracking-widest text-neutral-400">Description</label>
-                      <textarea rows={3} value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} className="w-full px-6 py-4 rounded-xl border border-neutral-100 outline-none focus:border-[#b47878] transition-colors" />
+                      <textarea rows={3} value={formData.description || ''} onChange={e => setFormData({...formData, description: e.target.value})} className="w-full px-6 py-4 rounded-xl border border-neutral-100 outline-none focus:border-[#b47878] transition-colors" />
                     </div>
                   </>
                 ) : (
                   <>
                     <div className="space-y-2">
+                      <label className="text-[10px] font-bold uppercase tracking-widest text-neutral-400">Header Image</label>
+                      <div className="mb-4">
+                        {formData.image_url ? (
+                          <div className="relative w-full h-32 border border-neutral-100 rounded-xl overflow-hidden group">
+                            <img src={formData.image_url} alt="Event" className="w-full h-full object-cover" />
+                            <button
+                              type="button"
+                              onClick={() => setFormData({ ...formData, image_url: '' })}
+                              className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                            >
+                              <Trash2 size={20} className="text-white" />
+                            </button>
+                          </div>
+                        ) : (
+                          <label className="w-full h-32 border-2 border-dashed border-neutral-200 rounded-xl flex flex-col items-center justify-center cursor-pointer hover:border-[#b47878] transition-colors">
+                            {uploading ? <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-[#b47878]" /> : <ImageIcon size={24} className="text-neutral-400" />}
+                            <span className="text-xs font-bold mt-2 uppercase text-neutral-400">Upload Banner Image</span>
+                            <input type="file" className="hidden" accept="image/*" onChange={handleImageUpload} />
+                          </label>
+                        )}
+                      </div>
+                    </div>
+                    <div className="space-y-2">
                       <label className="text-[10px] font-bold uppercase tracking-widest text-neutral-400">Event Title</label>
-                      <input required type="text" value={formData.title} onChange={e => setFormData({...formData, title: e.target.value})} className="w-full px-6 py-4 rounded-xl border border-neutral-100 outline-none focus:border-[#b47878] transition-colors" />
+                      <input required type="text" value={formData.title || ''} onChange={e => setFormData({...formData, title: e.target.value})} className="w-full px-6 py-4 rounded-xl border border-neutral-100 outline-none focus:border-[#b47878] transition-colors" />
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-2">
@@ -289,17 +369,17 @@ export default function AdminDashboard() {
                       </div>
                       <div className="space-y-2">
                         <label className="text-[10px] font-bold uppercase tracking-widest text-neutral-400">Venue</label>
-                        <input required type="text" value={formData.venue} onChange={e => setFormData({...formData, venue: e.target.value})} className="w-full px-6 py-4 rounded-xl border border-neutral-100 outline-none focus:border-[#b47878] transition-colors" />
+                        <input required type="text" value={formData.venue || ''} onChange={e => setFormData({...formData, venue: e.target.value})} className="w-full px-6 py-4 rounded-xl border border-neutral-100 outline-none focus:border-[#b47878] transition-colors" />
                       </div>
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-2">
                         <label className="text-[10px] font-bold uppercase tracking-widest text-neutral-400">Price ($)</label>
-                        <input required type="number" step="0.01" value={formData.price} onChange={e => setFormData({...formData, price: parseFloat(e.target.value)})} className="w-full px-6 py-4 rounded-xl border border-neutral-100 outline-none focus:border-[#b47878] transition-colors" />
+                        <input required type="number" step="0.01" value={formData.price || 0} onChange={e => setFormData({...formData, price: parseFloat(e.target.value)})} className="w-full px-6 py-4 rounded-xl border border-neutral-100 outline-none focus:border-[#b47878] transition-colors" />
                       </div>
                       <div className="space-y-2">
                         <label className="text-[10px] font-bold uppercase tracking-widest text-neutral-400">Capacity</label>
-                        <input required type="number" value={formData.capacity} onChange={e => {
+                        <input required type="number" value={formData.capacity || 0} onChange={e => {
                           const cap = parseInt(e.target.value);
                           setFormData({...formData, capacity: cap, seats_remaining: cap});
                         }} className="w-full px-6 py-4 rounded-xl border border-neutral-100 outline-none focus:border-[#b47878] transition-colors" />

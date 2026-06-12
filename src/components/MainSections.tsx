@@ -25,21 +25,21 @@ export const TrustSection = () => {
           <div>
             <div className="flex items-center gap-1.5 mb-8 select-none">
               {/* Pixel Badge Graphic */}
-              <svg width="20" height="20" viewBox="0 0 10 10" fill="none" className="text-[#FA520F]">
+              <svg width="20" height="20" viewBox="0 0 10 10" fill="none" className="text-[#b47878]">
                 <path d="M1 1h8v2H1V1zm1 4h6v1H2V5zm2 3h2v1H4V8z" fill="currentColor"/>
               </svg>
 
             </div>
             <h3 className="text-3xl font-normal tracking-tight uppercase leading-[0.95] mb-4">
-              System Performance Integrity
+              Our Sensory Philosophy
             </h3>
             <p className="text-neutral-500 text-xs leading-relaxed max-w-xs font-normal">
-              Continuous infrastructure verification parameters across active engagement channels and core telemetry distribution layers.
+              Combining ancient Tanzanian botanical knowledge with modern wellness practices to create scents that heal.
             </p>
           </div>
         </motion.div>
 
-        {/* Right Side Content Grid matching Mistral asymmetric column rules */}
+        {/* Right Side Content Grid */}
         <div className="lg:w-8/12 p-6 md:p-8 grid grid-cols-1 sm:grid-cols-2 gap-4 items-stretch bg-neutral-50/10">
           
           <motion.div
@@ -49,17 +49,17 @@ export const TrustSection = () => {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="p-8 bg-white flex flex-col justify-between min-h-[220px] group relative border-4 border-black transition-all duration-75 shadow-[4px_4px_0px_0px_#000000]"
           >
-            {/* 3D block shadows and orange indicators */}
-            <div className="absolute top-0 left-0 right-0 h-1 bg-[#FA520F]" />
+            {/* 3D block shadows and accent indicators */}
+            <div className="absolute top-0 left-0 right-0 h-1 bg-[#b47878]" />
             <span className="absolute inset-0 border-t-2 border-l-2 border-black/5 pointer-events-none" />
             <span className="absolute inset-0 border-b-2 border-r-2 border-black/20 pointer-events-none" />
 
             <div className="pt-6 relative">
-              <h4 className="text-lg font-bold uppercase tracking-wider text-black mb-2 font-mono group-hover:text-[#FA520F] transition-colors">
-                Maximum Availability
+              <h4 className="text-lg font-bold uppercase tracking-wider text-black mb-2 font-mono group-hover:text-[#b47878] transition-colors">
+                Artisanal Quality
               </h4>
               <p className="text-neutral-500 text-xs leading-relaxed">
-                Engineered for strict operational uptime loops to maintain persistent connection states across all regional carrier gateways.
+                Every candle is hand-poured in small batches using premium coconut-soy wax and locally sourced essential oils.
               </p>
             </div>
           </motion.div>
@@ -75,11 +75,11 @@ export const TrustSection = () => {
             <span className="absolute inset-0 border-b-2 border-r-2 border-black/20 pointer-events-none" />
 
             <div className="pt-6 relative">
-              <h4 className="text-lg font-bold uppercase tracking-wider text-black mb-2 font-mono group-hover:text-[#FA520F] transition-colors">
-                Zero Compromise
+              <h4 className="text-lg font-bold uppercase tracking-wider text-black mb-2 font-mono group-hover:text-[#b47878] transition-colors">
+                Sustainable Sourcing
               </h4>
               <p className="text-neutral-500 text-xs leading-relaxed">
-                Isolated sandbox boundaries ensuring complete transaction protection, customer confidentiality, and regulatory alignment.
+                Commitment to the environment through plastic-free packaging and supporting local ethical agriculture in Tanzania.
               </p>
             </div>
           </motion.div>
@@ -94,33 +94,33 @@ export const TrustSection = () => {
 export const ServicesSection = () => {
   const keyHighlights = [
     {
-      title: 'Neural Optimization',
-      desc: 'Deep parameter tuning loops engineered specifically to handle massive scale distributed enterprise learning pipelines safely.',
+      title: 'Aromatherapy',
+      desc: 'Blends designed to target specific emotional states: from calming the mind to revitalizing the body.',
       accent: true,
       pixelIcon: (
-        <svg width="28" height="28" viewBox="0 0 16 16" fill="none" className="text-black group-hover:text-[#FA520F] transition-colors mb-8">
+        <svg width="28" height="28" viewBox="0 0 16 16" fill="none" className="text-black group-hover:text-[#b47878] transition-colors mb-8">
           <path d="M2 2h4v4H2V2zm8 0h4v4h-4V2zM2 10h4v4H2v-4zm8 0h4v4h-4v-4z" fill="currentColor"/>
           <path d="M6 4h4v1H6V4zm0 8h4v1H6v-1zM4 6h1v4H4V6zm7 0h1v4h-1V6z" fill="currentColor" opacity="0.3"/>
         </svg>
       )
     },
     {
-      title: 'Secure Compute',
-      desc: 'Isolated container boundaries configured directly for sensitive operations, encryption protocols, and sovereign infrastructure storage.',
+      title: 'Home Sanctuary',
+      desc: 'Minimalist designs that complement any space, transforming your home into a high-end wellness retreat.',
       accent: false,
       pixelIcon: (
-        <svg width="28" height="28" viewBox="0 0 16 16" fill="none" className="text-black group-hover:text-[#FA520F] transition-colors mb-8">
+        <svg width="28" height="28" viewBox="0 0 16 16" fill="none" className="text-black group-hover:text-[#b47878] transition-colors mb-8">
           <path d="M4 2h8v2H4V2zm-2 4h12v6H2V6zm3 3h6v1H5V9z" fill="currentColor"/>
           <path d="M5 4h6v2H5V4z" fill="currentColor" opacity="0.2"/>
         </svg>
       )
     },
     {
-      title: 'Global Delivery',
-      desc: 'Edge-synchronized routing routers designed to safely pipeline system transactional instructions with zero latency degradation risks.',
+      title: 'Mindful Rituals',
+      desc: 'Curated sets and workshops that help you build consistent wellness practices into your daily life.',
       accent: false,
       pixelIcon: (
-        <svg width="28" height="28" viewBox="0 0 16 16" fill="none" className="text-black group-hover:text-[#FA520F] transition-colors mb-8">
+        <svg width="28" height="28" viewBox="0 0 16 16" fill="none" className="text-black group-hover:text-[#b47878] transition-colors mb-8">
           <path d="M1 5h14v6H1V5zm3 2h8v2H4V7z" fill="currentColor"/>
           <path d="M6 2h4v3H6V2zm0 9h4v3H6v-3z" fill="currentColor" opacity="0.4"/>
         </svg>
@@ -148,10 +148,10 @@ export const ServicesSection = () => {
             </div>
             
             <h2 className="text-4xl font-normal tracking-tight uppercase leading-[0.9] mb-6">
-              Core Technological <span className="text-[#FA520F] block font-bold">Framework.</span>
+              The Essence of <span className="text-[#b47878] block font-bold">Wellness.</span>
             </h2>
             <p className="text-neutral-500 text-xs leading-relaxed font-normal">
-              We design specialized software components built to integrate cleanly into complex operational environments and automated messaging setups.
+              We create sensory products that facilitate deep connection with oneself and the surrounding environment.
             </p>
           </div>
           
@@ -168,15 +168,15 @@ export const ServicesSection = () => {
               transition={{ duration: 0.5, delay: i * 0.15 }}
               className="p-8 lg:p-10 bg-white flex flex-col justify-between min-h-[380px] relative group hover:bg-neutral-50/40 transition-colors"
             >
-              {/* Asymmetric orange accent flag at top of highlighted item */}
-              {item.accent && <div className="absolute top-0 left-0 right-0 h-1 bg-[#FA520F]" />}
+              {/* Asymmetric accent flag at top of highlighted item */}
+              {item.accent && <div className="absolute top-0 left-0 right-0 h-1 bg-[#b47878]" />}
               
               <div>
                 <div className="flex items-center justify-between w-full mb-6">
                   {item.pixelIcon}
                 </div>
                 
-                <h3 className="text-sm font-bold uppercase tracking-wider text-black mb-3 group-hover:text-[#FA520F] transition-colors font-mono">
+                <h3 className="text-sm font-bold uppercase tracking-wider text-black mb-3 group-hover:text-[#b47878] transition-colors font-mono">
                   {item.title}
                 </h3>
                 <p className="text-neutral-500 text-xs leading-relaxed font-normal">
