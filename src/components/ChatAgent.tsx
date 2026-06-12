@@ -35,7 +35,7 @@ const quizQuestions = [
   {
     id: 'budget',
     question: "What's your preferred budget range for wellness?",
-    options: ['Value ($)', 'Mid-range ($$)', 'Premium ($$$)'],
+    options: ['Value (Tzs)', 'Mid-range (Tzss)', 'Premium (Tzsss)'],
   }
 ];
 
@@ -137,14 +137,6 @@ const Bubble = ({ msg, isLast }: { msg: Msg; isLast: boolean }) => {
           )}
         </div>
       </div>
-      {isUser && (
-        <div
-          className="w-7 h-7 rounded-full flex items-center justify-center shrink-0 text-[12px]"
-          style={{ background: 'rgba(0,0,0,0.08)', border: '1px solid rgba(0,0,0,0.1)' }}
-        >
-          👤
-        </div>
-      )}
     </motion.div>
   );
 };
@@ -152,9 +144,9 @@ const Bubble = ({ msg, isLast }: { msg: Msg; isLast: boolean }) => {
 const ChatAgent = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Msg[]>([]);
+  const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [step, setStep] = useState(0);
-  const [answers, setAnswers] = useState<Record<string, string>>({});
+  const [step, setStep] = useState(0); 
   const [clockTime, setClockTime] = useState('');
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -169,6 +161,28 @@ const ChatAgent = () => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' });
   }, [messages, isLoading]);
 
+  const callAI = async (currentMessages: Msg[]) => {
+    setIsLoading(true);
+    try {
+      const response = await fetch('/api/nawwi-ai', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          messages: currentMessages.map(m => ({ 
+            role: m.role, 
+            content: m.text 
+          })) 
+        }),
+      });
+      const result = await response.json();
+      setMessages(prev => [...prev, { role: 'model', text: result.text, time: getTime() }]);
+    } catch (err) {
+      console.error("AI Error:", err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const startQuiz = () => {
     setMessages([{
       role: 'model',
@@ -176,18 +190,13 @@ const ChatAgent = () => {
       time: getTime()
     }]);
     setStep(0);
-    setAnswers({});
   };
 
   const handleOptionSelect = async (option: string) => {
     if (isLoading) return;
-
-    const currentQuestion = quizQuestions[step];
-    const newAnswers = { ...answers, [currentQuestion.id]: option };
-    setAnswers(newAnswers);
-
     const userMsg: Msg = { role: 'user', text: option, time: getTime() };
-    setMessages(prev => [...prev, userMsg]);
+    const nextMessages = [...messages, userMsg];
+    setMessages(nextMessages);
 
     if (step < quizQuestions.length - 1) {
       setIsLoading(true);
@@ -202,40 +211,18 @@ const ChatAgent = () => {
         setIsLoading(false);
       }, 600);
     } else {
-      setIsLoading(true);
-      try {
-        const response = await fetch('/api/quiz', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ answers: newAnswers }),
-        });
-        const result = await response.json();
-
-        if (result.recommendations) {
-          setMessages(prev => [...prev, {
-            role: 'model',
-            text: "Based on your preferences, here are my top recommendations for you:",
-            time: getTime(),
-            recommendations: result.recommendations
-          }]);
-        } else {
-          setMessages(prev => [...prev, {
-            role: 'model',
-            text: "I've analyzed your preferences! You seem to love " + option + " scents. Browse our full collection to find your favorite.",
-            time: getTime()
-          }]);
-        }
-      } catch (err) {
-        setMessages(prev => [...prev, {
-          role: 'model',
-          text: "I've analyzed your preferences! Browse our collection to see our latest arrivals.",
-          time: getTime()
-        }]);
-      } finally {
-        setIsLoading(false);
-        setStep(quizQuestions.length); // End of quiz
-      }
+      setStep(quizQuestions.length);
+      await callAI(nextMessages);
     }
+  };
+
+  const handleSendMessage = async () => {
+    if (!input.trim() || isLoading) return;
+    const userMsg: Msg = { role: 'user', text: input, time: getTime() };
+    const nextMessages = [...messages, userMsg];
+    setMessages(nextMessages);
+    setInput('');
+    await callAI(nextMessages);
   };
 
   return (
@@ -371,8 +358,7 @@ const ChatAgent = () => {
                   </motion.div>
                 )}
 
-                {/* Question Options */}
-                {!isLoading && step < quizQuestions.length && (
+                {step < quizQuestions.length && !isLoading && (
                   <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex flex-col gap-2 ml-10 mt-2">
                     {quizQuestions[step].options.map((opt, i) => (
                       <motion.button
@@ -387,25 +373,23 @@ const ChatAgent = () => {
                     ))}
                   </motion.div>
                 )}
-
-                {/* Restart Quiz */}
-                {step >= quizQuestions.length && !isLoading && (
-                  <div className="flex justify-center mt-6">
-                    <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      onClick={startQuiz}
-                      className="flex items-center gap-2 px-6 py-2 bg-black text-white rounded-full text-xs font-bold uppercase tracking-widest"
-                    >
-                      <RefreshCcw size={14} />
-                      Restart Quiz
-                    </motion.button>
-                  </div>
-                )}
               </div>
 
+              {step >= quizQuestions.length && (
+                <div className="relative z-10 p-4 bg-white/80 border-t border-black/5 flex gap-2 shrink-0">
+                  <input
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
+                    className="flex-1 bg-transparent text-sm outline-none placeholder:text-black/30"
+                    placeholder="Type your message..."
+                  />
+                  <button onClick={handleSendMessage} className="p-2 bg-[#b47878] text-white rounded-full"><Send size={14} /></button>
+                </div>
+              )}
+
               <div className="relative z-10 px-4 pt-3 shrink-0" style={{ background: 'rgba(255,255,255,0.6)', backdropFilter: 'blur(20px)', borderTop: '1px solid rgba(0,0,0,0.07)', paddingBottom: 'max(12px, env(safe-area-inset-bottom, 12px))' }}>
-                <p className="text-[10px] text-center text-gray-400 mb-2 font-mono tracking-tighter">Powered by ANTERA</p>
+                <p className="text-[10px] text-center text-gray-400 mb-2 font-mono tracking-tighter">Powered by NAWWI</p>
                 <div className="flex justify-center mt-1 mb-1">
                   <div className="w-28 h-[5px] rounded-full" style={{ background: 'rgba(0,0,0,0.18)' }} />
                 </div>
