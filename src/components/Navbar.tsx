@@ -19,6 +19,8 @@ export const Navbar = () => {
 
   const navLinks = [
     { name: 'Shop', href: '/shop' },
+    { name: 'Our Story', href: '/story' },
+    { name: 'About Us', href: '/about' },
     { name: 'Events', href: '/events' },
     { name: 'Quiz', href: '/quiz' },
     { name: 'Track Order', href: '/track' },
@@ -26,12 +28,10 @@ export const Navbar = () => {
 
   return (
     <>
-      {/* Kept your exact structural layout system, but swapped the thick border-black for a thin, crisp divider line */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-neutral-200/80 text-xs font-mono font-bold antialiased uppercase tracking-wider h-16">
         <div className="max-w-7xl mx-auto flex items-stretch justify-between h-full">
           
           <div className="flex items-stretch">
-            {/* Kept your structural padding and column cells */}
             <Link href="/" className="flex items-center gap-3 px-6 border-r border-neutral-200/80 hover:bg-neutral-50 transition-colors">
               <img src="/Nawwi-logo.png" alt="Nawwi Logo" className="h-16 w-16 object-contain" />
               <span className="font-black text-black tracking-tighter text-lg font-serif italic">NAWWI</span>
@@ -42,7 +42,7 @@ export const Navbar = () => {
                 <Link
                   key={link.name}
                   href={link.href}
-                  className={`px-5 border-r border-neutral-200/80 transition-colors flex items-center ${
+                  className={`px-4 border-r border-neutral-200/80 transition-colors flex items-center ${
                     pathname === link.href ? 'bg-neutral-950 text-white' : 'text-black hover:bg-neutral-50'
                   }`}
                 >
@@ -53,7 +53,6 @@ export const Navbar = () => {
           </div>
 
           <div className="hidden lg:flex items-stretch">
-            {/* Kept the layout boxes intact, just lightened the grid walls */}
             <div className="relative flex items-stretch border-l border-neutral-200/80">
               <button
                 onClick={() => setShowLangs(!showLangs)}
@@ -113,7 +112,6 @@ export const Navbar = () => {
         </div>
       </nav>
 
-      {/* Mobile Drawer Layout Grid */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
