@@ -175,6 +175,10 @@ const ChatAgent = () => {
 
       console.log("Sending to Edge Function:", JSON.stringify(formattedMessages));
 
+      if (!API_URL) {
+        throw new Error("CHAT_API_URL is not configured");
+      }
+
       const response = await fetch(API_URL, {
         method: 'POST',
         headers: {

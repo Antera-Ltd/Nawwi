@@ -16,6 +16,12 @@ export default function LoginPage() {
 
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL === 'https://placeholder.supabase.co') {
+      setError('System configuration missing. Please ensure Supabase environment variables are set.');
+      return;
+    }
+
     setLoading(true);
     setError('');
 

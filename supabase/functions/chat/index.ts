@@ -47,11 +47,11 @@ serve(async (req) => {
 
     const genAI = new GoogleGenerativeAI(GEMINI_API_KEY)
     const model = genAI.getGenerativeModel({
-      model: "gemini-2.5-flash-lite",
+      model: "gemini-1.5-flash",
       systemInstruction: SYSTEM_PROMPT,
     })
 
-    const formattedHistory = messages.slice(0, -1).map((msg: any) => {
+    const rawHistory = messages.slice(0, -1).map((msg: any) => {
       let parts: { text: string }[]
       if (typeof msg.parts === 'string') {
         parts = [{ text: msg.parts }]
@@ -70,6 +70,12 @@ serve(async (req) => {
         parts,
       }
     })
+
+    // Gemini requires history to start with a 'user' message
+    let formattedHistory = rawHistory
+    while (formattedHistory.length > 0 && formattedHistory[0].role !== 'user') {
+      formattedHistory.shift()
+    }
 
     const lastMsg = messages[messages.length - 1]
     let lastMessageText: string
