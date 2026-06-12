@@ -47,7 +47,7 @@ serve(async (req) => {
 
     const genAI = new GoogleGenerativeAI(GEMINI_API_KEY)
     const model = genAI.getGenerativeModel({
-      model: "gemini-1.5-flash",
+      model: "gemini-2.5-flash",
       systemInstruction: SYSTEM_PROMPT,
     })
 
@@ -105,7 +105,9 @@ serve(async (req) => {
   } catch (error: any) {
     console.error("Nawwi Wellness AI Error:", error.message)
     return new Response(
-      JSON.stringify({ error: "I am currently taking a small break. Please try again in a moment." }),
+      JSON.stringify({
+        error: error.message || "I am currently taking a small break. Please try again in a moment."
+      }),
       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     )
   }
