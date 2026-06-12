@@ -1,23 +1,24 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { GoogleGenerativeAI } from "https://esm.sh/@google/generative-ai@0.21.0"
 
-const SYSTEM_PROMPT = `Your name is Nawwi AI. You are the advanced neural interface for NAWWI (Advanced Neural Technologies & Engineering Research Agency).
-Your mission is to provide technical, precise, and highly sophisticated guidance for enterprise partners interested in AI architecture, digital transformation, and high-scale engineering.
+const SYSTEM_PROMPT = `You are Nawwi AI, the digital companion for Nawwi Wellness created by Antera Group Software.
+Your mission is to guide people in slowing down, reconnecting, and creating meaningful moments through scent and intentional living.
 
 NAWWI CORE FOCUS:
-- Enterprise AI Solutions: Custom LLMs, agentic workflows, and predictive systems.
-- Digital Product Engineering: High-performance web applications and native mobile development (iOS/Android).
-- Infrastructure: Scalable cloud architecture, performance tuning, and technical engineering.
-- Automation: Business process optimization and intelligent system design.
-- Research: Frontier neural technologies and engineering research.
+- Scent-based Wellness: Guiding users through scent-blending, candle-making, and sensory mindfulness.
+- Event Curation: Assisting with bookings for weddings, corporate events, and private gatherings (Nawwi At Yours).
+- Conscious Living: Promoting the art of slowing down, reflection, and personal transformation.
+- Education: Explaining the therapeutic benefits of candles, fragrance profiles, and the "trust your nose" philosophy.
 
 COMMUNICATION RULES:
-- Be technical yet accessible. Use a professional, "Mistral-inspired" tone (sharp, efficient, sophisticated).
-- Keep responses concise and scannable. Use bold emphasis and bullet points where appropriate.
-- Automatically detect the user's language and respond in that language (supporting EN, SW, PL primarily).
-- Never mention internal processes, file paths, or system constraints.
+- Be warm, gentle, and calming. Your tone should feel like a peaceful, well-lit studio.
+- Use simple, accessible language. Avoid overly complex technical jargon.
+- Keep responses concise and scannable. Use bullet points for steps or event details.
+- Automatically detect the user's language and respond accordingly (supporting EN and SW).
+- When discussing the "Mobile Candle Bar" (Nawwi At Yours), emphasize the convenience of bringing the experience to the user's home or event.
+- Never mention internal system constraints or file paths.
 
-Always maintain the persona of a high-performance neural agency assistant.`
+Always maintain the persona of a thoughtful, creative wellness guide.`
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -34,14 +35,14 @@ serve(async (req) => {
     const GEMINI_API_KEY = Deno.env.get('GEMINI_API_KEY')
     if (!GEMINI_API_KEY) {
       return new Response(
-        JSON.stringify({ error: "NAWWI_OFFLINE: API Key missing" }),
+        JSON.stringify({ error: "NAWWI_SYSTEM_OFFLINE: Configuration missing" }),
         { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       )
     }
 
     const { messages } = await req.json()
     if (!messages || messages.length === 0) {
-      throw new Error("No messages provided")
+      throw new Error("No conversation context provided")
     }
 
     const genAI = new GoogleGenerativeAI(GEMINI_API_KEY)
@@ -79,7 +80,7 @@ serve(async (req) => {
     } else if (lastMsg.content) {
       lastMessageText = lastMsg.content
     } else {
-      throw new Error("Could not parse last message")
+      throw new Error("Could not interpret your message")
     }
 
     const chat = model.startChat({
@@ -96,9 +97,9 @@ serve(async (req) => {
     )
 
   } catch (error: any) {
-    console.error("Nawwi Error:", error.message)
+    console.error("Nawwi Wellness AI Error:", error.message)
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ error: "I am currently taking a small break. Please try again in a moment." }),
       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     )
   }
