@@ -428,7 +428,7 @@ const ChatAgent = () => {
               )}
 
               <div className="relative z-10 px-4 pt-3 shrink-0" style={{ background: 'rgba(255,255,255,0.6)', backdropFilter: 'blur(20px)', borderTop: '1px solid rgba(0,0,0,0.07)', paddingBottom: 'max(12px, env(safe-area-inset-bottom, 12px))' }}>
-                <p className="text-[10px] text-center text-gray-400 mb-2 font-mono tracking-tighter">Powered by Antera Group</p>
+                <p className="text-[10px] text-center text-gray-400 mb-2 font-mono tracking-tighter">Powered by Antera Group Software</p>
                 <div className="flex justify-center mt-1 mb-1">
                   <div className="w-28 h-[5px] rounded-full" style={{ background: 'rgba(0,0,0,0.18)' }} />
                 </div>

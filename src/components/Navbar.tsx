@@ -36,7 +36,6 @@ export const Navbar = () => {
           <div className="flex items-stretch">
             <Link href="/" className="flex items-center gap-3 px-6 border-r border-neutral-200/80 hover:bg-neutral-50 transition-colors">
               <img src="/Nawwi-logo.png" alt="Nawwi Logo" className="h-16 w-16 object-contain" />
-              <span className="font-black text-black tracking-tighter text-lg font-serif italic">NAWWI</span>
             </Link>
 
             <div className="hidden lg:flex items-stretch">
