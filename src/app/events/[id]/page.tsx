@@ -144,7 +144,7 @@ export default function EventDetailPage() {
               <div className="space-y-6">
                 <div className="flex justify-between items-center pb-6 border-b border-neutral-100">
                   <span className="text-neutral-400 font-bold uppercase tracking-widest text-xs">Price per guest</span>
-                  <span className="text-2xl font-serif">${event.price}</span>
+                  <span className="text-2xl font-serif">Tshs. {event.price}</span>
                 </div>
                 <button
                   onClick={() => setStep(2)}

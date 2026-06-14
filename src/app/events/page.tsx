@@ -90,7 +90,7 @@ export default function EventsPage() {
               <div className="w-full md:w-auto flex md:flex-col items-center md:items-end justify-between md:justify-center gap-4 pt-4 md:pt-0 border-t md:border-t-0 border-neutral-100">
                 <div>
                   <span className="text-[9px] font-bold uppercase tracking-wider text-neutral-400 block md:text-right mb-0.5">Admission</span>
-                  <p className="text-xl md:text-2xl font-bold tracking-tight text-neutral-900">${event.price}</p>
+                  <p className="text-xl md:text-2xl font-bold tracking-tight text-neutral-900">Tshs. {event.price}</p>
                 </div>
                 
                 <Link
