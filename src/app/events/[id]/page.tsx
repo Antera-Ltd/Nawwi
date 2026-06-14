@@ -178,7 +178,7 @@ export default function EventDetailPage() {
                 />
                 <div className="flex justify-between items-center py-4 border-t border-neutral-100">
                   <span className="font-serif text-lg">Total</span>
-                  <span className="font-serif text-2xl">${event.price}</span>
+                  <span className="font-serif text-2xl">Tshs. {event.price}</span>
                 </div>
                 <button
                   type="submit"
