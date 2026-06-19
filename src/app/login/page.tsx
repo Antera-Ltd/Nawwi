@@ -164,12 +164,12 @@ export default function LoginPage() {
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-neutral-100"></div>
             </div>
-            <div className="relative flex justify-center text-[10px] uppercase tracking-widest">
+            {/* <div className="relative flex justify-center text-[10px] uppercase tracking-widest">
               <span className="bg-white px-4 text-neutral-400">Or continue with</span>
-            </div>
+            </div> */}
           </div>
 
-          <button
+          {/* <button
             onClick={handleGoogleLogin}
             disabled={loading}
             className="mt-6 w-full bg-white border-2 border-black text-black py-4 font-bold uppercase tracking-widest hover:bg-neutral-50 transition-colors flex items-center justify-center gap-3"
@@ -193,7 +193,7 @@ export default function LoginPage() {
               />
             </svg>
             Google
-          </button>
+          </button> */}
         </div>
 
         <div className="mt-8 pt-6 border-t border-neutral-100 text-center">
